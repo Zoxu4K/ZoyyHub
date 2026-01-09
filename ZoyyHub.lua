@@ -1,4 +1,4 @@
--- ZyyHubGUI v2.3.1 Performance Optimized - Part 1/8oiii
+-- ZoyyHubGUI v2.3.1 Performance Optimized - Part 1/8oiii
 -- Core Setup & Module Loading System
 -- Fixed: Memory leaks, optimized performance
 
@@ -25,14 +25,14 @@ end
 -- ============================================
 -- ANTI-DUPLICATION
 -- ============================================
-local GUI_IDENTIFIER = "ZyyHubGUI v1"
+local GUI_IDENTIFIER = "ZoyyHubGUI v1"
 local INSTANCE_ID = tick() -- Unique ID for this script instance
 
 -- Store this instance as the active one
 if getgenv then
-    getgenv().ZyyHub_ActiveInstance = INSTANCE_ID
+    getgenv().ZoyyHub_ActiveInstance = INSTANCE_ID
 elseif _G then
-    _G.ZyyHub_ActiveInstance = INSTANCE_ID
+    _G.ZoyyHub_ActiveInstance = INSTANCE_ID
 end
 
 local function CloseExistingGUI()
@@ -52,7 +52,7 @@ local function CloseExistingGUI()
     
     -- AGGRESSIVE: Find and destroy ANY floating button anywhere in PlayerGui
     for _, descendant in ipairs(playerGui:GetDescendants()) do
-        if descendant.Name == "ZyyHubFloatingButton" or 
+        if descendant.Name == "ZoyyHubFloatingButton" or 
            string.find(tostring(descendant.Name):lower(), "floating") then 
             pcall(function() descendant:Destroy() end)
         end
@@ -60,7 +60,7 @@ local function CloseExistingGUI()
     
     -- Also check for orphaned floating buttons at PlayerGui level
     for _, child in ipairs(playerGui:GetChildren()) do
-        if child.Name == "ZyyHubFloatingButton" or
+        if child.Name == "ZoyyHubFloatingButton" or
            (child:IsA("ImageLabel") and child.ZIndex >= 100) then 
             pcall(function() child:Destroy() end)
         end
@@ -138,15 +138,15 @@ end
 -- ============================================
 -- Kill old script connections when new script starts
 if getgenv then
-    if getgenv().ZyyHub_ConnectionManager then
-        pcall(function() getgenv().ZyyHub_ConnectionManager:Cleanup() end)
+    if getgenv().ZoyyHub_ConnectionManager then
+        pcall(function() getgenv().ZoyyHub_ConnectionManager:Cleanup() end)
     end
-    getgenv().ZyyHub_ConnectionManager = ConnectionManager
+    getgenv().ZoyyHub_ConnectionManager = ConnectionManager
 elseif _G then
-    if _G.ZyyHub_ConnectionManager then
-        pcall(function() _G.ZyyHub_ConnectionManager:Cleanup() end)
+    if _G.ZoyyHub_ConnectionManager then
+        pcall(function() _G.ZoyyHub_ConnectionManager:Cleanup() end)
     end
-    _G.ZyyHub_ConnectionManager = ConnectionManager
+    _G.ZoyyHub_ConnectionManager = ConnectionManager
 end
 
 -- ============================================
@@ -200,7 +200,7 @@ function LoadingNotification.Create()
     
     pcall(function()
         local notifGui = new("ScreenGui", {
-            Name = "ZyyHubLoadingNotification",
+            Name = "ZoyyHubLoadingNotification",
             Parent = localPlayer.PlayerGui,
             ResetOnSpawn = false,
             ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
@@ -232,7 +232,7 @@ function LoadingNotification.Create()
             Size = UDim2.new(1, -80, 0, 24),
             Position = UDim2.new(0, 70, 0, 12),
             BackgroundTransparency = 1,
-            Text = "ZyyHub Script Loading",
+            Text = "ZoyyHub Script Loading",
             Font = Enum.Font.GothamBold,
             TextSize = 14,
             TextColor3 = Color3.fromRGB(255, 255, 255),
@@ -312,7 +312,7 @@ function LoadingNotification.Complete(success, loadedCount, totalCount)
     
     pcall(function()
         if LoadingNotification.TitleLabel then
-            LoadingNotification.TitleLabel.Text = success and "ZyyHub Ready!" or "Loading Complete"
+            LoadingNotification.TitleLabel.Text = success and "ZoyyHub Ready!" or "Loading Complete"
         end
         
         if LoadingNotification.StatusLabel then
@@ -549,7 +549,7 @@ local scriptHeader = new("Frame", {
 
 local appTitle = new("TextLabel", {
     Parent = scriptHeader,
-    Text = "ZyyHub",
+    Text = "ZoyyHub",
     Font = Enum.Font.GothamBlack,
     TextSize = 20,
     TextColor3 = colors.text,
@@ -650,7 +650,7 @@ local UserInputService = game:GetService("UserInputService")
 -- Clean up ANY existing floating buttons in PlayerGui (prevent duplicates)
 local pGui = localPlayer:WaitForChild("PlayerGui")
 for _, child in ipairs(pGui:GetChildren()) do
-    if child.Name == "ZyyHubFloatingButtonGui" then
+    if child.Name == "ZoyyHubFloatingButtonGui" then
         child:Destroy()
     end
 end
@@ -664,7 +664,7 @@ end
 
 -- Create SEPARATE ScreenGui for floating button (survives independently)
 local floatingGui = new("ScreenGui", {
-    Name = "ZyyHubFloatingButtonGui",
+    Name = "ZoyyHubFloatingButtonGui",
     Parent = pGui,
     ResetOnSpawn = false,
     ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
@@ -673,7 +673,7 @@ local floatingGui = new("ScreenGui", {
 
 -- Create Floating Restore Button (Hidden by default)
 local restoreBtn = new("ImageButton", {
-    Name = "ZyyHubFloatingButton", 
+    Name = "ZoyyHubFloatingButton", 
     Parent = floatingGui, -- Now in SEPARATE gui
     Size = UDim2.new(0, 50, 0, 50),
     Position = UDim2.new(0, 30, 0.5, -25), 
@@ -1209,7 +1209,7 @@ local function makeButton(parent, label, callback)
     return btnFrame
 end
 
--- ZyyHubGUI v2.3.1 Performance Optimized - Part 3/8
+-- ZoyyHubGUI v2.3.1 Performance Optimized - Part 3/8
 -- Dropdown & Checkbox Components (Baris 1201-1800)
 
 -- Dropdown (Memory Optimized)
@@ -1931,7 +1931,7 @@ do
     end)
 end
 
--- ZyyHubGUI v2.3.1 Performance Optimized - Part 4/8
+-- ZoyyHubGUI v2.3.1 Performance Optimized - Part 4/8
 -- More Blatant Modes & Support Features (Baris 1801-2400)
 
 -- Blatant V1
@@ -2481,7 +2481,7 @@ if EventTeleport then
 end
 end
 
--- ZyyHubGUI v2.3.1 Performance Optimized - Part 5/8
+-- ZoyyHubGUI v2.3.1 Performance Optimized - Part 5/8
 -- Shop Page & Webhook Configuration (Baris 2401-3000)
 
 -- ============================================
@@ -3015,7 +3015,7 @@ InputReferences.FreecamSensitivity = makeInput(catFreecam, "Mouse Sensitivity", 
     if FreecamModule then FreecamModule.SetSensitivity(value) end
 end)
 
--- ZyyHubGUI v2.3.1 Performance Optimized - Part 6/8
+-- ZoyyHubGUI v2.3.1 Performance Optimized - Part 6/8
 -- Settings Page & Hide Stats (Baris 3001-3600)
 
 -- ============================================
@@ -3472,8 +3472,8 @@ new("UIPadding", {Parent = configListContainer, PaddingTop = UDim.new(0, 4), Pad
 local function GetSavedConfigs()
     local configs = {}
     pcall(function()
-        if isfolder and isfolder("ZyyHubGUI_Configs") then
-            local files = listfiles("ZyyHubGUI_Configs")
+        if isfolder and isfolder("ZoyyHubGUI_Configs") then
+            local files = listfiles("ZoyyHubGUI_Configs")
             for _, file in ipairs(files) do
                 local name = file:match("([^/\\]+)%.json$")
                 if name then
@@ -3565,7 +3565,7 @@ local function RefreshConfigList()
             ConnectionManager:Add(loadBtn.MouseButton1Click:Connect(function()
                 local loaded = false
                 local success, err = pcall(function()
-                    local filePath = "ZyyHubGUI_Configs/" .. configName .. ".json"
+                    local filePath = "ZoyyHubGUI_Configs/" .. configName .. ".json"
                     if isfile(filePath) then
                         local content = readfile(filePath)
                         local data = game:GetService("HttpService"):JSONDecode(content)
@@ -3631,7 +3631,7 @@ local function RefreshConfigList()
             -- Delete button click
             ConnectionManager:Add(deleteBtn.MouseButton1Click:Connect(function()
                 local success, err = pcall(function()
-                    local filePath = "ZyyHubGUI_Configs/" .. configName .. ".json"
+                    local filePath = "ZoyyHubGUI_Configs/" .. configName .. ".json"
                     if isfile(filePath) then
                         delfile(filePath)
                     end
@@ -3673,8 +3673,8 @@ ConnectionManager:Add(saveConfigBtn.MouseButton1Click:Connect(function()
     end
     
     local success, err = pcall(function()
-        if not isfolder("ZyyHubGUI_Configs") then
-            makefolder("ZyyHubGUI_Configs")
+        if not isfolder("ZoyyHubGUI_Configs") then
+            makefolder("ZoyyHubGUI_Configs")
         end
         
         -- 1. Safely retrieve config
@@ -3724,7 +3724,7 @@ ConnectionManager:Add(saveConfigBtn.MouseButton1Click:Connect(function()
         local jsonSuccess, json = pcall(function() return game:GetService("HttpService"):JSONEncode(cleanData) end)
         if not jsonSuccess then error("JSON Encode Fail: " .. tostring(json)) end
         
-        local filePath = "ZyyHubGUI_Configs/" .. configName .. ".json"
+        local filePath = "ZoyyHubGUI_Configs/" .. configName .. ".json"
         writefile(filePath, json)
         return #json
     end)
@@ -3737,7 +3737,7 @@ ConnectionManager:Add(saveConfigBtn.MouseButton1Click:Connect(function()
             pcall(RefreshConfigList)
         end)
     else
-        warn("ZyyHub Save Error Trace: " .. tostring(err))
+        warn("ZoyyHub Save Error Trace: " .. tostring(err))
         SendNotification("Config", "⚠ Save Error: " .. tostring(err), 5)
     end
 end))
@@ -3828,7 +3828,7 @@ local titleLabel = new("TextLabel", {
     Size = UDim2.new(1, -80, 0, 30),
     Position = UDim2.new(0, 75, 0, 20),
     BackgroundTransparency = 1,
-    Text = "ZyyHub v2.3.1",
+    Text = "ZoyyHub v2.3.1",
     Font = Enum.Font.GothamBold,
     TextSize = 18,
     TextColor3 = colors.primary,
@@ -4080,7 +4080,7 @@ local function createMinimizedIcon()
     task.wait(0.1) -- Brief wait for cleanup
     
     icon = new("ImageLabel", {
-        Name = "ZyyHubMinimizeIcon", -- Add unique name
+        Name = "ZoyyHubMinimizeIcon", -- Add unique name
         Parent = gui,
         Size = UDim2.new(0, 50, 0, 50),
         Position = savedIconPos,
@@ -4329,7 +4329,7 @@ TrackedSpawn(function()
     tween2:Play()
 end)
 
--- ZyyHubGUI v2.3.1 Performance Optimized - Part 7/8
+-- ZoyyHubGUI v2.3.1 Performance Optimized - Part 7/8
 -- Config Loading & Module Startup System (Baris 3601-4200)
 
 -- ============================================
@@ -4622,7 +4622,7 @@ end
 -- ============================================
 
 CleanupGUI = function()
-    print("🧹 Cleaning up ZyyHubGUI...")
+    print("🧹 Cleaning up ZoyyHubGUI...")
     
     -- 1. Cancel all running tasks
     for i = #RunningTasks, 1, -1 do
@@ -4692,10 +4692,10 @@ CleanupGUI = function()
     -- 11. Release universal GUI lock
     if getgenv then
         getgenv().LYNX_GUI_RUNNING = false
-        getgenv().ZyyHub_ActiveInstance = nil
+        getgenv().ZoyyHub_ActiveInstance = nil
     elseif _G then
         _G.LYNX_GUI_RUNNING = false
-        _G.ZyyHub_ActiveInstance = nil
+        _G.ZoyyHub_ActiveInstance = nil
     end
     
     -- 12. Force garbage collection
@@ -4704,7 +4704,7 @@ CleanupGUI = function()
         task.wait(0.1)
     end
     
-    print("✅ ZyyHubGUI cleanup complete!")
+    print("✅ ZoyyHubGUI cleanup complete!")
 end
 
 -- ============================================
@@ -4795,7 +4795,7 @@ end)
 local guiLoaded = true
 
 -- Export functions
-local ZyyHubGUI = {
+local ZoyyHubGUI = {
     Version = "2.3.1",
     IsLoaded = function() return guiLoaded end,
     GetModule = GetModule,
@@ -4806,10 +4806,10 @@ local ZyyHubGUI = {
 }
 
 -- Make accessible globally
-_G.ZyyHubGUI = ZyyHubGUI
+_G.ZoyyHubGUI = ZoyyHubGUI
 
 -- Destroy function
-function ZyyHubGUI:Destroy()
+function ZoyyHubGUI:Destroy()
     CleanupGUI()
     guiLoaded = false
 end
@@ -4819,11 +4819,11 @@ end
 -- ============================================
 
 -- Final success notification
-SendNotification("✨ ZyyHub GUI v2.3.1", "Loaded! " .. loadedModules .. "/" .. totalModules .. " modules ready.", 5)
+SendNotification("✨ ZoyyHub GUI v2.3.1", "Loaded! " .. loadedModules .. "/" .. totalModules .. " modules ready.", 5)
 
 -- Console output
 print("\n━━━━━━━━━━━━━━━━━━━━━━")
-print("✨ ZyyHubGUI v2.3.1 Performance Optimized")
+print("✨ ZoyyHubGUI v2.3.1 Performance Optimized")
 print("━━━━━━━━━━━━━━━━━━━━━━")
 print("📦 Modules: " .. loadedModules .. "/" .. totalModules)
 
