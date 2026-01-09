@@ -282,7 +282,7 @@ print("━━━━━━━━━━━━━━━━━━━━━━")
 -- Load Security Loader
 local SecurityLoader
 local loaderSuccess, loaderError = pcall(function()
-    SecurityLoader = loadstring(game:HttpGet("https://fakelag.nekoweb.org/ZoyyHub/Loader.lua"))()
+    SecurityLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/refs/heads/main/Loader.lua"))()
 end)
 
 if not loaderSuccess or not SecurityLoader then
