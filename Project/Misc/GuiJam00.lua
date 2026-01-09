@@ -2,9 +2,9 @@
 -- Core Setup, Services, Advanced Loading System
 -- FREE NOT FOR SALE
 
--- ❌ THIS FILE IS DEPRECATED - USE JackHub.lua INSTEAD ❌
+-- ❌ THIS FILE IS DEPRECATED - USE ZoyyHub.lua INSTEAD ❌
 print("⚠️ WARNING: GuiJam00.lua is deprecated!")
-print("ℹ️ Please use JackHub.lua instead")
+print("ℹ️ Please use ZoyyHub.lua instead")
 print("🛑 Terminating old version to prevent conflicts...")
 return -- TERMINATE IMMEDIATELY
 
@@ -14,13 +14,13 @@ return -- TERMINATE IMMEDIATELY
 if getgenv then
     if getgenv().LYNX_GUI_RUNNING then
         warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
-        warn("ℹ️ Use JackHub.lua instead of GuiJam00.lua")
+        warn("ℹ️ Use ZoyyHub.lua instead of GuiJam00.lua")
         return
     end
 elseif _G then
     if _G.LYNX_GUI_RUNNING then
         warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
-        warn("ℹ️ Use JackHub.lua instead of GuiJam00.lua")
+        warn("ℹ️ Use ZoyyHub.lua instead of GuiJam00.lua")
         return
     end
 end
@@ -86,23 +86,23 @@ print("🔄 LYNX GUI v2.3 - LOADING")
 print("━━━━━━━━━━━━━━━━━━━━━━")
 
 -- Load Security Loader
-local ZoyyLoader
+local SecurityLoader
 local loaderSuccess, loaderError = pcall(function()
-    ZoyyLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/ZoyyLoader.lua"))()
+    SecurityLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/SecurityLoader.lua"))()
 end)
 
-if not loaderSuccess or not ZoyyLoader then
+if not loaderSuccess or not SecurityLoader then
     local errorMsg = loaderError and tostring(loaderError) or "Unknown error"
-    SendNotification("❌ CRITICAL ERROR", "ZoyyLoader failed!", 10)
-    warn("❌ CRITICAL: ZoyyLoader failed to load - " .. errorMsg)
-    warn("❌ Script cannot continue without ZoyyLoader")
+    SendNotification("❌ CRITICAL ERROR", "SecurityLoader failed!", 10)
+    warn("❌ CRITICAL: SecurityLoader failed to load - " .. errorMsg)
+    warn("❌ Script cannot continue without SecurityLoader")
     return
 end
 
-print("✅ ZoyyLoader loaded successfully")
+print("✅ SecurityLoader loaded successfully")
 SendNotification("✅ Security OK", "Loading modules...", 2)
 
--- Module list - MATCHED WITH ZoyyLoader (35 modules)
+-- Module list - MATCHED WITH SecurityLoader (35 modules)
 local ModuleList = {
     -- Critical modules first
     "Notify", "HideStats", "Webhook",
@@ -143,7 +143,7 @@ local function LoadModuleWithRetry(moduleName, retryCount)
     retryCount = retryCount or 0
     
     local success, result = pcall(function()
-        return ZoyyLoader.LoadModule(moduleName)
+        return SecurityLoader.LoadModule(moduleName)
     end)
     
     if success and result then
