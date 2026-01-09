@@ -1,7 +1,7 @@
 -- UPDATED SECURITY LOADER - Includes EventTeleportDynamiefws
--- Replace your ZoyyLoader.lua with this
+-- Replace your SecurityLoader.lua with this
 
-local ZoyyLoader = {}
+local SecurityLoader = {}
 
 -- ============================================
 -- CONFIGURATION
@@ -111,30 +111,32 @@ local function validateDomain(url)
 end
 
 -- ============================================
+-- ENCRYPTED MODULE URLS (ALL 28 MODULES)
+-- ============================================
 local encryptedURLs = {
     instant = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYnFjQhKDEnWxwQEw==",
     instant2 = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYnFjQhKDEnR14JBzI=",
     blatantv1 = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHARGREREz0RNUNLGCpT",
-    UltraBlatant = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH2dAQC1CC2cyLQ0PFjMDe3E/ABE=",
+    UltraBlatant = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHARGREREz0RNUBLGCpT",
     blatantv2 = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYsFCYhKDEnI0JLHiYE",
-    blatantv2fix = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH2dAQC1CC2cyLQ0PFjMTICc2ESZUXD8QAg==",
+    blatantv2fix = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHARGREREz0RJRsdETtkARxYVCE=",
     NoFishingAnimation = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAdGjYMATsMDRUkGjZfUUZdTi4NSFA/",
     LockPosition = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAfGhMOIjwWCgYMGzEcXEdV",
     AutoEquipRod = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHASAAQKNyIQCgI3GzscXEdV",
     DisableCutscenes = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAXHAMEED8AIAcRBzxXXldHDyxWRQ==",
     DisableExtras = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAXHAMEED8AJgoRBj5BHl5BQA==",
     AutoTotem3X = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHASAAQKJjwRBh9WDHFeRVM=",
-    SkinAnimation = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH2dAQC1CC3Y1JRc9DyYlCDE6GBERGzwLTR4QFQ==",
+    SkinAnimation = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAAHhkLISQEEzMLHTJTRFtbT25PUUQ=",
     WalkOnWater = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAEFBwOPT0yAgYABnFeRVM=",
     TeleportModule = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY6HSswOTAhAT0KFiYJBlwJAT4=",
     TeleportToPlayer = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY6HSswOTAhASMcAScADl0xETNXQF1GVRRMdEk/NRwcVisgKA==",
     SavedLocation = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY6HSswOTAhASMcAScADl02FSlXVH5bQiFXTUowYhUbGQ==",
     AutoQuestModule = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY/DSImPXASAAQKIyYAEAYoGztHXFcaTTVC",
-    AutoTemple = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH2NBRDNXC2k7OhwcKTIwOit9GQUE",
+    AutoTemple = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY/DSImPXAfEAYAAAIQBgERWjNHUQ==",
     TempleDataReader = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY/DSImPXAHEB0VHjYhAgYEJjpTVFdGDyxWRQ==",
     AutoSell = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY9ECglDzoyAQUXFyBKIgcRGwxXXF4aTTVC",
     AutoSellTimer = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY9ECglDzoyAQUXFyBKIgcRGwxXXF5gSC1GVgsyORg=",
-    MerchantSystem = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH2FcTjBlQUQqOQsLC2gaOTo9JhgKAn0JFhM=",
+    MerchantSystem = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY9ECglDzoyAQUXFyBKLAIAGgxaX0IaTTVC",
     RemoteBuyer = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY9ECglDzoyAQUXFyBKMRcIGytXckdNRDINSFA/",
     FreecamModule = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYtGSowOz52R0AzGzYSTDQXETpRUV95TiRWSEBwIAwP",
     UnlimitedZoomModule = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYtGSowOz52R0AzGzYSTCcLGDZfWUZRRRpMS0hwIAwP",
@@ -142,24 +144,23 @@ local encryptedURLs = {
     UnlockFPS = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2Zgo9GR8GGRU1MFwJAT4=",
     FPSBooster = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2ZhkjBjIKHSARBgBLGCpT",
     AutoBuyWeather = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY9ECglDzoyAQUXFyBKIgcRGx1HSWVRQDRLQVdwIAwP",
-    Notify = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH2ZRTSVTS1cqHwAdDCI4ZhE8ARkDGzAEFxsKGhJdVEdYRG5PUUQ=",
+    Notify = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY6HSswOTAhASMcAScADl0rGytbVltXQDRKS0sTIx0bFCJ7JSoy",
     EventTeleportDynamic = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY6HSswOTAhASMcAScADl0gAjpcRGZRTSVTS1cqCAAAGSo8KnE/ABE=",
     HideStats = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2Zhc6ERU2BjIREFwJAT4=",
     Webhook = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2Zgg2FxgKHThLDwcE",
-    GoodPerfectionStable = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH2dAQC1CC3U7Ph8LGzM8JjEUGh8BXD8QAg==",
+    GoodPerfectionStable = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHADEAIDFzARCh0LMzBdVBxYVCE=",
     DisableRendering = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2Zhs6BhEHHjY3BhwBES1bXlUaTTVC",
     AutoFavorite = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYvDTM6Dz4lGgIMBjZLDwcE",
-    PingFPSMonitor = "JA0aCDRvZnA0HAQNBzFLAB0IWwVdSEcAam95S1wnBAwMVyU5Jj18GBEMHHw1ER0PETxGH39dUiMMdEwwKykPFiI5ZzMmFA==",
+    PingFPSMonitor = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2Zg86Gxc1Ez0AD1wJAT4=",
     MovementModule = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2ZhI8AxUIFz0RLh0BATNXHl5BQA==",
     AutoSellSystem = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY9ECglDzoyAQUXFyBKIgcRGwxXXF5nWDNXQUhwIAwP",
     ManualSave = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFYjETQ2ZhIyGwUEHgAEFRdLGCpT",
 }
 
-
 -- ============================================
 -- LOAD MODULE FUNCTION
 -- ============================================
-function ZoyyLoader.LoadModule(moduleName)
+function SecurityLoader.LoadModule(moduleName)
     if not checkRateLimit() then
         return nil
     end
@@ -191,7 +192,7 @@ end
 -- ============================================
 -- ANTI-DUMP PROTECTION (COMPATIBLE VERSION)
 -- ============================================
-function ZoyyLoader.EnableAntiDump()
+function SecurityLoader.EnableAntiDump()
     local mt = getrawmetatable(game)
     if not mt then 
         warn("⚠️ Anti-Dump: Metatable not accessible")
@@ -236,7 +237,7 @@ end
 -- ============================================
 -- UTILITY FUNCTIONS
 -- ============================================
-function ZoyyLoader.GetSessionInfo()
+function SecurityLoader.GetSessionInfo()
     local info = {
         Version = CONFIG.VERSION,
         LoadCount = loadCounts[game:GetService("RbxAnalyticsService"):GetClientId()] or 0,
@@ -255,18 +256,18 @@ function ZoyyLoader.GetSessionInfo()
     return info
 end
 
-function ZoyyLoader.ResetRateLimit()
+function SecurityLoader.ResetRateLimit()
     local identifier = game:GetService("RbxAnalyticsService"):GetClientId()
     loadCounts[identifier] = 0
     lastLoadTime[identifier] = 0
     print("✅ Rate limit reset")
 end
 
-print("━━━━━━━━━━━━━━━━━━━━━━")
-print("🔒 ZoyyHub Security Loader v" .. CONFIG.VERSION)
-print("✅ Total Modules: 28 (EventTeleport added!)")
-print("✅ Rate Limiting:", CONFIG.ENABLE_RATE_LIMITING and "ENABLED" or "DISABLED")
-print("✅ Domain Check:", CONFIG.ENABLE_DOMAIN_CHECK and "ENABLED" or "DISABLED")
-print("━━━━━━━━━━━━━━━━━━━━━━")
+-- print("━━━━━━━━━━━━━━━━━━━━━━")
+-- print("🔒 ZoyyHub Security Loader v" .. CONFIG.VERSION)
+-- print("✅ Total Modules: 28 (EventTeleport added!)")
+-- print("✅ Rate Limiting:", CONFIG.ENABLE_RATE_LIMITING and "ENABLED" or "DISABLED")
+-- print("✅ Domain Check:", CONFIG.ENABLE_DOMAIN_CHECK and "ENABLED" or "DISABLED")
+-- print("━━━━━━━━━━━━━━━━━━━━━━")
 
-return ZoyyLoader
+return SecurityLoader
