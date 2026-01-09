@@ -1679,7 +1679,7 @@ end
 -- Load ConfigSystem
 local ConfigSystem
 local configSuccess, configError = pcall(function()
-    ConfigSystem = loadstring(game:HttpGet("https://fakelag.nekoweb.org/ZoyyHub/Project/Misc/SaveConfig.lua"))()
+    ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/refs/heads/main/Project/Misc/SaveConfig.lua"))()
 end)
 
 if not configSuccess or not ConfigSystem then
