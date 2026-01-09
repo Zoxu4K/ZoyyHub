@@ -477,28 +477,30 @@ local function GetModule(name)
 end
 
 -- ============================================
--- COLOR PALETTE - Navy Blue Theme (Biru Dongker)
+-- COLOR PALETTE – Black & Gray Premium Theme
 -- ============================================
 local colors = {
-    -- Accents (Biru laut muda / cyan)
-    primary = Color3.fromRGB(56, 189, 248),      -- Sea Blue
-    secondary = Color3.fromRGB(125, 211, 252),  -- Light Ocean Blue
-    
-    -- Status colors (tetap aman & jelas)
-    success = Color3.fromRGB(74, 222, 128),     -- Soft Green
-    warning = Color3.fromRGB(251, 191, 36),     -- Soft Amber
-    danger  = Color3.fromRGB(248, 113, 113),    -- Soft Red
-    
-    -- Backgrounds (putih kebiruan, cocok transparan 0.5)
-    bg1 = Color3.fromRGB(240, 249, 255),        -- Main BG (Sea White)
-    bg2 = Color3.fromRGB(224, 242, 254),        -- Card BG
-    bg3 = Color3.fromRGB(186, 230, 253),        -- Button BG
-    bg4 = Color3.fromRGB(147, 197, 253),        -- Hover / Active
-    accent = Color3.fromRGB(56, 189, 248),      -- Accent Blue
-    
-    -- Text colors
-    text = Color3.fromRGB(15, 23, 42),          -- Dark Blue (readable)
-    textDim = Color3.fromRGB(71, 85, 105)       -- Muted Blue Gray
+    -- Accent (netral tapi modern)
+    primary   = Color3.fromRGB(180, 180, 180),   -- Soft Silver
+    secondary = Color3.fromRGB(220, 220, 220),   -- Light Silver
+
+    -- Status colors (lebih soft, ga norak)
+    success = Color3.fromRGB(80, 200, 120),      -- Soft Green
+    warning = Color3.fromRGB(255, 185, 70),      -- Soft Orange
+    danger  = Color3.fromRGB(235, 90, 90),       -- Soft Red
+
+    -- Backgrounds (HITAM DOMINAN)
+    bg1 = Color3.fromRGB(12, 12, 12),            -- Main Window (Pure Black)
+    bg2 = Color3.fromRGB(22, 22, 22),            -- Cards / Panels
+    bg3 = Color3.fromRGB(32, 32, 32),            -- Buttons
+    bg4 = Color3.fromRGB(45, 45, 45),            -- Hover / Active
+
+    -- Stroke / accent halus
+    accent = Color3.fromRGB(160, 160, 160),
+
+    -- Text colors (high readability)
+    text    = Color3.fromRGB(235, 235, 235),     -- Main Text
+    textDim = Color3.fromRGB(150, 150, 150)      -- Secondary Text
 }
 
 -- ============================================
