@@ -1,4 +1,4 @@
--- JHub Panel - Ping & CPU Monitor (Real CPU from Roblox)
+-- ZoyyHub Panel - Ping & CPU Monitor (Real CPU from Roblox)
 -- Module yang bisa dipanggil dengan PingFPSMonitor:Show() dan :Hide()
 
 local Players = game:GetService("Players")
@@ -19,7 +19,7 @@ local isVisible = false
 local function createMonitorGUI()
     -- Main ScreenGui
     local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "JHubPanelMonitor"
+    screenGui.Name = "ZoyyHubPanelMonitor"
     screenGui.ResetOnSpawn = false
     screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
     screenGui.DisplayOrder = 999999
@@ -76,7 +76,7 @@ local function createMonitorGUI()
     titleLabel.Size = UDim2.new(1, -40, 1, 0)
     titleLabel.Position = UDim2.new(0, 36, 0, 0)
     titleLabel.BackgroundTransparency = 1
-    titleLabel.Text = "JHUB"
+    titleLabel.Text = "ZoyyHub"
     titleLabel.TextColor3 = Color3.fromRGB(255, 140, 50)
     titleLabel.TextTransparency = 0.2 -- Lebih transparan
     titleLabel.TextSize = 13
@@ -317,7 +317,7 @@ end
 
 -- Initialize GUI
 local function initializeGUI()
-    local existing = CoreGui:FindFirstChild("JHubPanelMonitor")
+    local existing = CoreGui:FindFirstChild("ZoyyHubPanelMonitor")
     if existing then
         existing:Destroy()
         task.wait(0.1)
@@ -373,7 +373,7 @@ function PingFPSMonitor:Show()
             end
         end)
         
-        print("✅ JHub Monitor aktif! (Ping & Real CPU)")
+        print("✅ ZoyyHub Monitor aktif! (Ping & Real CPU)")
     end
 end
 
@@ -393,7 +393,7 @@ function PingFPSMonitor:Hide()
             pingUpdateConnection = nil
         end
         
-        print("✅ JHub Monitor disembunyikan!")
+        print("✅ ZoyyHub Monitor disembunyikan!")
     end
 end
 
