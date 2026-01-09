@@ -88,7 +88,7 @@ print("━━━━━━━━━━━━━━━━━━━━━━")
 -- Load Security Loader
 local ZoyyLoader
 local loaderSuccess, loaderError = pcall(function()
-    ZoyyLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/ZoyyLoader.lua"))()
+    ZoyyLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/ZoyyLoader.lua"))()
 end)
 
 if not loaderSuccess or not ZoyyLoader then
