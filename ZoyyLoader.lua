@@ -263,7 +263,7 @@ function ZoyyLoader.ResetRateLimit()
 end
 
 print("━━━━━━━━━━━━━━━━━━━━━━")
-print("🔒 ZyyHub Security Loader v" .. CONFIG.VERSION)
+print("🔒 ZoyyHub Security Loader v" .. CONFIG.VERSION)
 print("✅ Total Modules: 28 (EventTeleport added!)")
 print("✅ Rate Limiting:", CONFIG.ENABLE_RATE_LIMITING and "ENABLED" or "DISABLED")
 print("✅ Domain Check:", CONFIG.ENABLE_DOMAIN_CHECK and "ENABLED" or "DISABLED")
