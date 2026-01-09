@@ -2,9 +2,9 @@
 -- Core Setup, Services, Loading System
 -- FREE NOT FOR SALE
 
--- ❌ THIS FILE IS DEPRECATED - USE ZyyHub.lua INSTEAD ❌
+-- ❌ THIS FILE IS DEPRECATED - USE ZoyyHub.lua INSTEAD ❌
 print("⚠️ WARNING: FixTogleAutoSave.lua is deprecated!")
-print("ℹ️ Please use ZyyHub.lua instead")
+print("ℹ️ Please use ZoyyHub.lua instead")
 print("🛑 Terminating old version to prevent conflicts...")
 return -- TERMINATE IMMEDIATELY
 
@@ -14,13 +14,13 @@ return -- TERMINATE IMMEDIATELY
 if getgenv then
     if getgenv().LYNX_GUI_RUNNING then
         warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
-        warn("ℹ️ Use ZyyHub.lua instead of FixTogleAutoSave.lua")
+        warn("ℹ️ Use ZoyyHub.lua instead of FixTogleAutoSave.lua")
         return
     end
 elseif _G then
     if _G.LYNX_GUI_RUNNING then
         warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
-        warn("ℹ️ Use ZyyHub.lua instead of FixTogleAutoSave.lua")
+        warn("ℹ️ Use ZoyyHub.lua instead of FixTogleAutoSave.lua")
         return
     end
 end
