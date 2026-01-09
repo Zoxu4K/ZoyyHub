@@ -41,7 +41,7 @@ local function CloseExistingGUI()
     -- Remove ALL instances with matching name (prevents duplicates from fast re-execution)
     for _, child in ipairs(playerGui:GetChildren()) do
         if child:IsA("ScreenGui") and (
-            string.find(child.Name, "Jack") or 
+            string.find(child.Name, "Zoyy") or 
             string.find(child.Name, "Lynx") or 
             child.Name == GUI_IDENTIFIER or
             child.Name == "LynxGUI_Galaxy"
