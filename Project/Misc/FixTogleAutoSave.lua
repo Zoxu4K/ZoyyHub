@@ -280,21 +280,21 @@ print("🔄 LYNX GUI v2.3 - LOADING")
 print("━━━━━━━━━━━━━━━━━━━━━━")
 
 -- Load Security Loader
-local ZoyyLoader
+local SecurityLoader
 local loaderSuccess, loaderError = pcall(function()
-    ZoyyLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/ZoyyLoader.lua"))()
+    SecurityLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/SecurityLoader.lua"))()
 end)
 
-if not loaderSuccess or not ZoyyLoader then
+if not loaderSuccess or not SecurityLoader then
     local errorMsg = loaderError and tostring(loaderError) or "Unknown error"
     LoadingNotification.Complete(false, 0, 1)
-    SendNotification("❌ CRITICAL ERROR", "ZoyyLoader failed!", 10)
-    warn("❌ CRITICAL: ZoyyLoader failed to load - " .. errorMsg)
+    SendNotification("❌ CRITICAL ERROR", "SecurityLoader failed!", 10)
+    warn("❌ CRITICAL: SecurityLoader failed to load - " .. errorMsg)
     return
 end
 
-print("✅ ZoyyLoader loaded successfully")
-LoadingNotification.Update(1, 32, "ZoyyLoader")
+print("✅ SecurityLoader loaded successfully")
+LoadingNotification.Update(1, 32, "SecurityLoader")
 
 -- Module list
 local ModuleList = {
@@ -328,7 +328,7 @@ local function LoadModuleWithRetry(moduleName, retryCount)
     retryCount = retryCount or 0
     
     local success, result = pcall(function()
-        return ZoyyLoader.LoadModule(moduleName)
+        return SecurityLoader.LoadModule(moduleName)
     end)
     
     if success and result then
@@ -1679,7 +1679,7 @@ end
 -- Load ConfigSystem
 local ConfigSystem
 local configSuccess, configError = pcall(function()
-    ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/refs/heads/main/Project/Misc/SaveConfig.lua"))()
+    ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/Project/Misc/SaveConfig.lua"))()
 end)
 
 if not configSuccess or not ConfigSystem then
