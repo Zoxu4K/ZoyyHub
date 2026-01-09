@@ -2,9 +2,9 @@
 -- Core Setup, Services, Loading System
 -- FREE NOT FOR SALE
 
--- ❌ THIS FILE IS DEPRECATED - USE ZoyyHub.lua INSTEAD ❌
+-- ❌ THIS FILE IS DEPRECATED - USE ZyyHub.lua INSTEAD ❌
 print("⚠️ WARNING: FixTogleAutoSave.lua is deprecated!")
-print("ℹ️ Please use ZoyyHub.lua instead")
+print("ℹ️ Please use ZyyHub.lua instead")
 print("🛑 Terminating old version to prevent conflicts...")
 return -- TERMINATE IMMEDIATELY
 
@@ -14,13 +14,13 @@ return -- TERMINATE IMMEDIATELY
 if getgenv then
     if getgenv().LYNX_GUI_RUNNING then
         warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
-        warn("ℹ️ Use ZoyyHub.lua instead of FixTogleAutoSave.lua")
+        warn("ℹ️ Use ZyyHub.lua instead of FixTogleAutoSave.lua")
         return
     end
 elseif _G then
     if _G.LYNX_GUI_RUNNING then
         warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
-        warn("ℹ️ Use ZoyyHub.lua instead of FixTogleAutoSave.lua")
+        warn("ℹ️ Use ZyyHub.lua instead of FixTogleAutoSave.lua")
         return
     end
 end
@@ -280,21 +280,21 @@ print("🔄 LYNX GUI v2.3 - LOADING")
 print("━━━━━━━━━━━━━━━━━━━━━━")
 
 -- Load Security Loader
-local Loader
+local ZoyyLoader
 local loaderSuccess, loaderError = pcall(function()
-    Loader = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/Loader.lua"))()
+    ZoyyLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/ZoyyLoader.lua"))()
 end)
 
-if not loaderSuccess or not Loader then
+if not loaderSuccess or not ZoyyLoader then
     local errorMsg = loaderError and tostring(loaderError) or "Unknown error"
     LoadingNotification.Complete(false, 0, 1)
-    SendNotification("❌ CRITICAL ERROR", "Loader failed!", 10)
-    warn("❌ CRITICAL: Loader failed to load - " .. errorMsg)
+    SendNotification("❌ CRITICAL ERROR", "ZoyyLoader failed!", 10)
+    warn("❌ CRITICAL: ZoyyLoader failed to load - " .. errorMsg)
     return
 end
 
-print("✅ Loader loaded successfully")
-LoadingNotification.Update(1, 32, "Loader")
+print("✅ ZoyyLoader loaded successfully")
+LoadingNotification.Update(1, 32, "ZoyyLoader")
 
 -- Module list
 local ModuleList = {
@@ -328,7 +328,7 @@ local function LoadModuleWithRetry(moduleName, retryCount)
     retryCount = retryCount or 0
     
     local success, result = pcall(function()
-        return Loader.LoadModule(moduleName)
+        return ZoyyLoader.LoadModule(moduleName)
     end)
     
     if success and result then
@@ -1679,7 +1679,7 @@ end
 -- Load ConfigSystem
 local ConfigSystem
 local configSuccess, configError = pcall(function()
-    ConfigSystem = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/Project/Misc/SaveConfig.lua"))()
+    ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/Project_code/Misc/SaveConfig.lua"))()
 end)
 
 if not configSuccess or not ConfigSystem then
