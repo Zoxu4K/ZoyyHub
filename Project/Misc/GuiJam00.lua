@@ -86,23 +86,23 @@ print("🔄 LYNX GUI v2.3 - LOADING")
 print("━━━━━━━━━━━━━━━━━━━━━━")
 
 -- Load Security Loader
-local SecurityLoader
+local Loader
 local loaderSuccess, loaderError = pcall(function()
-    SecurityLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/refs/heads/main/Loader.lua"))()
+    Loader = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/Loader.lua"))()
 end)
 
-if not loaderSuccess or not SecurityLoader then
+if not loaderSuccess or not Loader then
     local errorMsg = loaderError and tostring(loaderError) or "Unknown error"
-    SendNotification("❌ CRITICAL ERROR", "SecurityLoader failed!", 10)
-    warn("❌ CRITICAL: SecurityLoader failed to load - " .. errorMsg)
-    warn("❌ Script cannot continue without SecurityLoader")
+    SendNotification("❌ CRITICAL ERROR", "Loader failed!", 10)
+    warn("❌ CRITICAL: Loader failed to load - " .. errorMsg)
+    warn("❌ Script cannot continue without Loader")
     return
 end
 
-print("✅ SecurityLoader loaded successfully")
+print("✅ Loader loaded successfully")
 SendNotification("✅ Security OK", "Loading modules...", 2)
 
--- Module list - MATCHED WITH SecurityLoader (35 modules)
+-- Module list - MATCHED WITH Loader (35 modules)
 local ModuleList = {
     -- Critical modules first
     "Notify", "HideStats", "Webhook",
@@ -143,7 +143,7 @@ local function LoadModuleWithRetry(moduleName, retryCount)
     retryCount = retryCount or 0
     
     local success, result = pcall(function()
-        return SecurityLoader.LoadModule(moduleName)
+        return Loader.LoadModule(moduleName)
     end)
     
     if success and result then
