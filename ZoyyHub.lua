@@ -137,7 +137,7 @@ function ConnectionManager:Cleanup()
 end
 
 -- ============================================
--- GLOBAL CLEANUP (KILL ZOMBIES)
+-- GLOBAL CLEANUP
 -- ============================================
 -- Kill old script connections when new script starts
 if getgenv then
@@ -261,6 +261,7 @@ function LoadingNotification.Create()
             Size = UDim2.new(1, -36, 0, 4),
             Position = UDim2.new(0, 18, 1, -16),
             BackgroundColor3 = Color3.fromRGB(60, 60, 60),
+            BackgroundTransparency = 0.5,
             BorderSizePixel = 0,
             ZIndex = 2
         })
@@ -479,25 +480,25 @@ end
 -- COLOR PALETTE - Navy Blue Theme (Biru Dongker)
 -- ============================================
 local colors = {
-    -- Accents (Lighter Blue / Cyan for contrast)
-    primary = Color3.fromRGB(56, 189, 248),      -- Sky Blue
-    secondary = Color3.fromRGB(14, 165, 233),    -- Deep Sky Blue
+    -- Accents (Biru laut muda / cyan)
+    primary = Color3.fromRGB(56, 189, 248),      -- Sea Blue
+    secondary = Color3.fromRGB(125, 211, 252),  -- Light Ocean Blue
     
-    -- Status colors
-    success = Color3.fromRGB(34, 197, 94),       -- Green
-    warning = Color3.fromRGB(245, 158, 11),      -- Amber
-    danger = Color3.fromRGB(239, 68, 68),        -- Red
+    -- Status colors (tetap aman & jelas)
+    success = Color3.fromRGB(74, 222, 128),     -- Soft Green
+    warning = Color3.fromRGB(251, 191, 36),     -- Soft Amber
+    danger  = Color3.fromRGB(248, 113, 113),    -- Soft Red
     
-    -- Solid Navy Blue backgrounds (Biru Dongker)
-    bg1 = Color3.fromRGB(10, 13, 26),            -- Darkest Navy (Window)
-    bg2 = Color3.fromRGB(17, 24, 39),            -- Dark Navy (Cards)
-    bg3 = Color3.fromRGB(30, 41, 59),            -- Navy (Buttons)
-    bg4 = Color3.fromRGB(51, 65, 85),            -- Light Navy (Hover)
-    accent = Color3.fromRGB(56, 189, 248),       -- Blue accent
+    -- Backgrounds (putih kebiruan, cocok transparan 0.5)
+    bg1 = Color3.fromRGB(240, 249, 255),        -- Main BG (Sea White)
+    bg2 = Color3.fromRGB(224, 242, 254),        -- Card BG
+    bg3 = Color3.fromRGB(186, 230, 253),        -- Button BG
+    bg4 = Color3.fromRGB(147, 197, 253),        -- Hover / Active
+    accent = Color3.fromRGB(56, 189, 248),      -- Accent Blue
     
     -- Text colors
-    text = Color3.fromRGB(255, 255, 255),        -- White
-    textDim = Color3.fromRGB(148, 163, 184)      -- Blueish Gray
+    text = Color3.fromRGB(15, 23, 42),          -- Dark Blue (readable)
+    textDim = Color3.fromRGB(71, 85, 105)       -- Muted Blue Gray
 }
 
 -- ============================================
@@ -3750,7 +3751,7 @@ new("TextLabel", {
     Size = UDim2.new(1, -90, 0, 18),
     Position = UDim2.new(0, 85, 0, 48),
     BackgroundTransparency = 1,
-    Text = "Premium Fish It Script",
+    Text = "Free forever.",
     Font = Enum.Font.Gotham,
     TextSize = 10,
     TextColor3 = colors.textDim,
@@ -3818,7 +3819,7 @@ local linkButton = new("TextButton", {
     BackgroundColor3 = Color3.fromRGB(88, 101, 242),
     BackgroundTransparency = 0.85,
     BorderSizePixel = 0,
-    Text = "🔗 discord.gg/tshTkdDx  (Click to Copy)",
+    Text = "🔗 discord.gg/XXXXX  (Click to Copy)",
     Font = Enum.Font.GothamBold,
     TextSize = 11,
     TextColor3 = Color3.fromRGB(88, 101, 242),
@@ -3828,10 +3829,10 @@ new("UICorner", {Parent = linkButton, CornerRadius = UDim.new(0, 8)})
 
 ConnectionManager:Add(linkButton.MouseButton1Click:Connect(function()
     pcall(function()
-        setclipboard("https://discord.gg/tshTkdDx")
+        setclipboard("https://discord.gg/XXXXX")
         linkButton.Text = "✅ Copied to Clipboard!"
         task.wait(2)
-        linkButton.Text = "🔗 discord.gg/tshTkdDx  (Click to Copy)"
+        linkButton.Text = "🔗 discord.gg/XXXXX  (Click to Copy)"
     end)
 end))
 
@@ -4875,7 +4876,7 @@ VERSION: v2.3.1 Performance Optimized
 RELEASE DATE: 2024
 ROBLOX GAME: Fisch
 CREATOR: Beee
-SUPPORT: https://discord.gg/tshTkdDx
+SUPPORT: https://discord.gg/XXXXX
 
 MEMORY USAGE:
   ├─ Initial Load: ~25-35 MB
@@ -5062,7 +5063,7 @@ VERSION: 2.3.1 Performance Optimized
 LICENSE: Free - Not For Sale
 
 SUPPORT:
-  Discord: https://discord.gg/tshTkdDx
+  Discord: https://discord.gg/XXXXX
   
 SPECIAL THANKS:
   - Module developers
