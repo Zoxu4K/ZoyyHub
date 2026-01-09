@@ -366,7 +366,7 @@ local CRITICAL_MODULES = {"HideStats", "Webhook", "Notify"}
 LoadingNotification.Create()
 
 -- Load ZoyyLoader
-local ZoyyLoader = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/Loader.lua"))()
+local ZoyyLoader = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/ZoyyLoader.lua"))()
 
 if not ZoyyLoader then
     LoadingNotification.Complete(false, 0, 1)
@@ -1701,7 +1701,7 @@ end
 -- ============================================
 -- CONFIG SYSTEM
 -- ============================================
-local ConfigSystem = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/Loader.lua"))()
+local ConfigSystem = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/ZoyyLoader.lua"))()
 
 -- Inject Local Config Management (Fixes Persistence)
 if ConfigSystem then
