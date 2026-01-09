@@ -1,7 +1,7 @@
 -- UPDATED SECURITY LOADER - Includes EventTeleportDynamiefws
--- Replace your SecurityLoader.lua with this
+-- Replace your Loader.lua with this
 
-local SecurityLoader = {}
+local Loader = {}
 
 -- ============================================
 -- CONFIGURATION
@@ -162,11 +162,10 @@ local encryptedURLs = {
     SkinSwapAnimation = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAAHhkLISQEEzMLHTJTRFtbT25PUUQ=",
     WalkOnWater = "JA0aCDRvZnAhFAdLFToRCwcHASxXQlFbTzRGSlFwLxYDVx06MSpnPl8/HSocKwcHWzJTWVwbcTJMTkA9OFY7DCY4KHAEFBwOPT0yAgYABnFeRVM=",
 }
-
 -- ============================================
 -- LOAD MODULE FUNCTION
 -- ============================================
-function SecurityLoader.LoadModule(moduleName)
+function Loader.LoadModule(moduleName)
     if not checkRateLimit() then
         return nil
     end
@@ -198,7 +197,7 @@ end
 -- ============================================
 -- ANTI-DUMP PROTECTION (COMPATIBLE VERSION)
 -- ============================================
-function SecurityLoader.EnableAntiDump()
+function Loader.EnableAntiDump()
     local mt = getrawmetatable(game)
     if not mt then 
         warn("⚠️ Anti-Dump: Metatable not accessible")
@@ -243,7 +242,7 @@ end
 -- ============================================
 -- UTILITY FUNCTIONS
 -- ============================================
-function SecurityLoader.GetSessionInfo()
+function Loader.GetSessionInfo()
     local info = {
         Version = CONFIG.VERSION,
         LoadCount = loadCounts[game:GetService("RbxAnalyticsService"):GetClientId()] or 0,
@@ -262,7 +261,7 @@ function SecurityLoader.GetSessionInfo()
     return info
 end
 
-function SecurityLoader.ResetRateLimit()
+function Loader.ResetRateLimit()
     local identifier = game:GetService("RbxAnalyticsService"):GetClientId()
     loadCounts[identifier] = 0
     lastLoadTime[identifier] = 0
@@ -270,11 +269,10 @@ function SecurityLoader.ResetRateLimit()
 end
 
 print("━━━━━━━━━━━━━━━━━━━━━━")
-print("🔒 JackHub Security Loader v" .. CONFIG.VERSION)
+print("🔒 ZoyyHub Security Loader v" .. CONFIG.VERSION)
 print("✅ Total Modules: 28 (EventTeleport added!)")
 print("✅ Rate Limiting:", CONFIG.ENABLE_RATE_LIMITING and "ENABLED" or "DISABLED")
 print("✅ Domain Check:", CONFIG.ENABLE_DOMAIN_CHECK and "ENABLED" or "DISABLED")
 print("━━━━━━━━━━━━━━━━━━━━━━")
 
-return SecurityLoader
-
+return Loader

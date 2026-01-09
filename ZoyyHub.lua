@@ -365,16 +365,16 @@ local CRITICAL_MODULES = {"HideStats", "Webhook", "Notify"}
 
 LoadingNotification.Create()
 
--- Load SecurityLoader
-local SecurityLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/refs/heads/main/Loader.lua"))()
+-- Load Loader
+local Loader = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/Loader.lua"))()
 
-if not SecurityLoader then
+if not Loader then
     LoadingNotification.Complete(false, 0, 1)
-    SendNotification("❌ ERROR", "SecurityLoader failed!", 10)
+    SendNotification("❌ ERROR", "Loader failed!", 10)
     return
 end
 
-LoadingNotification.Update(1, 32, "SecurityLoader")
+LoadingNotification.Update(1, 32, "Loader")
 
 -- Module List
 local ModuleList = {
@@ -418,7 +418,7 @@ local function LoadModuleWithRetry(moduleName, retryCount)
     end
     
     local success, result = pcall(function()
-        return SecurityLoader.LoadModule(moduleName)
+        return Loader.LoadModule(moduleName)
     end)
     
     if success and result then
@@ -1701,7 +1701,7 @@ end
 -- ============================================
 -- CONFIG SYSTEM
 -- ============================================
-local ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/refs/heads/main/Loader.lua"))()
+local ConfigSystem = loadstring(game:HttpGet("https://github.com/Zoxu4K/ZoyyHub/blob/main/Loader.lua"))()
 
 -- Inject Local Config Management (Fixes Persistence)
 if ConfigSystem then
@@ -5148,7 +5148,7 @@ ISSUE: GUI not loading
   ➜ Check console for errors
 
 ISSUE: Module failed to load
-  ➜ Check if SecurityLoader is working
+  ➜ Check if Loader is working
   ➜ Verify internet connection
   ➜ Try again after 30 seconds
   ➜ Check module availability
