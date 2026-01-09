@@ -71,6 +71,9 @@ end
 
 CloseExistingGUI()
 
+-- Show loading message in console
+print("⏳ Loading ZoyyHub script...")
+
 -- ============================================
 -- SERVICES (Cached once)
 -- ============================================
@@ -212,7 +215,7 @@ function LoadingNotification.Create()
             Size = UDim2.new(0, 340, 0, 100),
             Position = UDim2.new(0.5, -170, 0.5, -50),
             BackgroundColor3 = Color3.fromRGB(0, 0, 0),
-            BackgroundTransparency = 0.15,
+            BackgroundTransparency = 0,
             BorderSizePixel = 0
         })
         new("UICorner", {Parent = notifFrame, CornerRadius = UDim.new(0, 16)})
@@ -317,8 +320,8 @@ function LoadingNotification.Complete(success, loadedCount, totalCount)
         
         if LoadingNotification.StatusLabel then
             LoadingNotification.StatusLabel.Text = success 
-                and string.format("✓ %d modules loaded", loadedCount)
-                or string.format("⚠ Loaded %d/%d", loadedCount, totalCount)
+                and "✓ All systems ready"
+                or "⚠ Loading complete"
         end
         
         if LoadingNotification.ProgressBar then
@@ -365,16 +368,16 @@ local CRITICAL_MODULES = {"HideStats", "Webhook", "Notify"}
 
 LoadingNotification.Create()
 
--- Load ZoyyLoader
-local ZoyyLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/ZoyyLoader.lua"))()
+-- Load SecurityLoader
+local SecurityLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/SecurityLoader.lua"))()
 
-if not ZoyyLoader then
+if not SecurityLoader then
     LoadingNotification.Complete(false, 0, 1)
-    SendNotification("❌ ERROR", "ZoyyLoader failed!", 10)
+    SendNotification("❌ ERROR", "SecurityLoader failed!", 10)
     return
 end
 
-LoadingNotification.Update(1, 32, "ZoyyLoader")
+LoadingNotification.Update(1, 32, "SecurityLoader")
 
 -- Module List
 local ModuleList = {
@@ -418,7 +421,7 @@ local function LoadModuleWithRetry(moduleName, retryCount)
     end
     
     local success, result = pcall(function()
-        return ZoyyLoader.LoadModule(moduleName)
+        return SecurityLoader.LoadModule(moduleName)
     end)
     
     if success and result then
@@ -473,28 +476,28 @@ local function GetModule(name)
 end
 
 -- ============================================
--- COLOR PALETTE
+-- COLOR PALETTE - Navy Blue Theme (Biru Dongker)
 -- ============================================
 local colors = {
-    primary = Color3.fromRGB(56, 189, 248), -- Sky Blue
-    secondary = Color3.fromRGB(30, 41, 59), -- Slate 800
+    -- Accents (Lighter Blue / Cyan for contrast)
+    primary = Color3.fromRGB(56, 189, 248),      -- Sky Blue
+    secondary = Color3.fromRGB(14, 165, 233),    -- Deep Sky Blue
     
-    success = Color3.fromRGB(34, 197, 94),
-    warning = Color3.fromRGB(245, 158, 11),
-    danger = Color3.fromRGB(239, 68, 68), -- Soft Red
+    -- Status colors
+    success = Color3.fromRGB(34, 197, 94),       -- Green
+    warning = Color3.fromRGB(245, 158, 11),      -- Amber
+    danger = Color3.fromRGB(239, 68, 68),        -- Red
     
-    bg1 = Color3.fromRGB(15, 23, 42), -- Darkest Navy (Win BG)
-    bg2 = Color3.fromRGB(30, 41, 59), -- Lighter Navy (Sections/Detail)
-    bg3 = Color3.fromRGB(51, 65, 85), -- Borders
-    bg4 = Color3.fromRGB(71, 85, 105), -- Hover Light
-    accent = Color3.fromRGB(14, 165, 233),
+    -- Solid Navy Blue backgrounds (Biru Dongker)
+    bg1 = Color3.fromRGB(10, 13, 26),            -- Darkest Navy (Window)
+    bg2 = Color3.fromRGB(17, 24, 39),            -- Dark Navy (Cards)
+    bg3 = Color3.fromRGB(30, 41, 59),            -- Navy (Buttons)
+    bg4 = Color3.fromRGB(51, 65, 85),            -- Light Navy (Hover)
+    accent = Color3.fromRGB(56, 189, 248),       -- Blue accent
     
-    text = Color3.fromRGB(241, 245, 249),
-    textDim = Color3.fromRGB(148, 163, 184),
-    textDimmer = Color3.fromRGB(100, 116, 139),
-    
-    border = Color3.fromRGB(51, 65, 85),
-    shadow = Color3.fromRGB(0, 0, 0)
+    -- Text colors
+    text = Color3.fromRGB(255, 255, 255),        -- White
+    textDim = Color3.fromRGB(148, 163, 184)      -- Blueish Gray
 }
 
 -- ============================================
@@ -531,13 +534,13 @@ local win = new("Frame", {
     Size = windowSize,
     Position = UDim2.new(0.5, -windowSize.X.Offset/2, 0.5, -windowSize.Y.Offset/2),
     BackgroundColor3 = colors.bg1,
-    BackgroundTransparency = 0.05,
+    BackgroundTransparency = 0,
     BorderSizePixel = 0,
     ClipsDescendants = false,
     ZIndex = 3
 })
 new("UICorner", {Parent = win, CornerRadius = UDim.new(0, 16)})
-new("UIStroke", {Parent = win, Color = colors.bg3, Thickness = 2, ApplyStrokeMode = Enum.ApplyStrokeMode.Border})
+new("UIStroke", {Parent = win, Color = colors.primary, Thickness = 1, Transparency = 0.7, ApplyStrokeMode = Enum.ApplyStrokeMode.Border})
 
 -- Header
 local scriptHeader = new("Frame", {
@@ -551,13 +554,23 @@ local appTitle = new("TextLabel", {
     Parent = scriptHeader,
     Text = "ZoyyHub",
     Font = Enum.Font.GothamBlack,
-    TextSize = 20,
+    TextSize = 22,
     TextColor3 = colors.text,
     Size = UDim2.new(0, 200, 1, 0),
     Position = UDim2.new(0, 16, 0, 0),
     BackgroundTransparency = 1,
     TextXAlignment = Enum.TextXAlignment.Left,
     ZIndex = 6
+})
+
+-- Add gradient to title
+local titleGradient = new("UIGradient", {
+    Parent = appTitle,
+    Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, colors.primary),
+        ColorSequenceKeypoint.new(1, colors.secondary)
+    },
+    Rotation = 45
 })
 
 
@@ -576,7 +589,7 @@ local btnMinHeader = new("TextButton", {
     Parent = headerBtns,
     Size = UDim2.new(0, 32, 0, 32),
     BackgroundColor3 = colors.bg3,
-    BackgroundTransparency = 0.5,
+    BackgroundTransparency = 0,
     Text = "—",
     Font=Enum.Font.GothamBold,
     TextColor3=colors.textDim,
@@ -589,7 +602,7 @@ local btnCloseHeader = new("TextButton", {
     Parent = headerBtns,
     Size = UDim2.new(0, 32, 0, 32),
     BackgroundColor3 = colors.danger,
-    BackgroundTransparency = 0.2,
+    BackgroundTransparency = 0,
     Text = "×",
     Font = Enum.Font.GothamBold,
     TextSize = 18,
@@ -647,76 +660,19 @@ local originalSize = windowSize -- Store ONCE, never changes
 local isToggling = false -- Debounce
 local UserInputService = game:GetService("UserInputService")
 
--- Clean up ANY existing floating buttons in PlayerGui (prevent duplicates)
-local pGui = localPlayer:WaitForChild("PlayerGui")
-for _, child in ipairs(pGui:GetChildren()) do
-    if child.Name == "ZoyyHubFloatingButtonGui" then
-        child:Destroy()
-    end
-end
-
---[[
--- ============================================
--- OLD FLOATING BUTTON SYSTEM (DISABLED)
--- Reason: Creates duplicate buttons + unwanted blue border
--- Using createMinimizedIcon() instead
--- ============================================
-
--- Create SEPARATE ScreenGui for floating button (survives independently)
-local floatingGui = new("ScreenGui", {
-    Name = "ZoyyHubFloatingButtonGui",
-    Parent = pGui,
-    ResetOnSpawn = false,
-    ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-    DisplayOrder = 2147483647
-})
-
--- Create Floating Restore Button (Hidden by default)
-local restoreBtn = new("ImageButton", {
-    Name = "ZoyyHubFloatingButton", 
-    Parent = floatingGui, -- Now in SEPARATE gui
-    Size = UDim2.new(0, 50, 0, 50),
-    Position = UDim2.new(0, 30, 0.5, -25), 
-    BackgroundColor3 = colors.bg2,
-    BackgroundTransparency = 0.2,
-    BorderSizePixel = 0,
-    Image = "rbxthumb://type=Asset&id=91891350821146&w=420&h=420", 
-    Visible = false, -- Default to Hidden
-    AutoButtonColor = false,
-    ZIndex = 200 
-})
-
--- Heartbeat to sync visibility
-local hb = game:GetService("RunService").Heartbeat:Connect(function()
-    if not win or not win.Parent then 
-        if restoreBtn then restoreBtn.Visible = true end -- Show button if main window is gone
-        return 
-    end
-    if restoreBtn then
-        restoreBtn.Visible = not win.Visible
-    end
-end)
-ConnectionManager:Add(hb)
-new("UICorner", {Parent = restoreBtn, CornerRadius = UDim.new(0, 12)})
-new("UIStroke", {Parent = restoreBtn, Color = colors.primary, Thickness = 2, Transparency = 0.5})
-
+-- ToggleMinimize Function (Restored)
 local function ToggleMinimize()
     -- SAFETY: If this script's GUI is dead, don't run
     if not gui or not gui.Parent then return end
-    if not floatingGui or not floatingGui.Parent then return end
-    if not restoreBtn then return end
-    
     if isToggling then return end -- Debounce: prevent spam
     isToggling = true
     
     if win.Visible then
-        -- Minimize: Hide Window, Show Button
+        -- Minimize: Hide Window
         win.Visible = false
-        restoreBtn.Visible = true
         isMinimized = true
     else
-        -- Restore: Show Window, Hide Button
-        restoreBtn.Visible = false
+        -- Restore: Show Window
         win.Visible = true
         win.Size = UDim2.new(0, 0, 0, 0)
         TweenService:Create(win, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Size = originalSize}):Play()
@@ -726,37 +682,13 @@ local function ToggleMinimize()
     task.delay(0.35, function() isToggling = false end)
 end
 
-ConnectionManager:Add(restoreBtn.MouseButton1Click:Connect(ToggleMinimize))
-ConnectionManager:Add(btnMinHeader.MouseButton1Click:Connect(ToggleMinimize))
-ConnectionManager:Add(UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end -- Don't trigger if typing in chat etc
-    if input.KeyCode == Enum.KeyCode.RightControl then
-        ToggleMinimize()
+-- Clean up ANY existing floating buttons in PlayerGui (prevent duplicates)
+local pGui = localPlayer:WaitForChild("PlayerGui")
+for _, child in ipairs(pGui:GetChildren()) do
+    if child.Name == "ZoyyHubFloatingButtonGui" then
+        child:Destroy()
     end
-end))
-
--- Draggable Restore Button
-local draggingRestore, dragInputRestore, dragStartRestore, startPosRestore
-ConnectionManager:Add(restoreBtn.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        draggingRestore = true
-        dragStartRestore = input.Position
-        startPosRestore = restoreBtn.Position
-        input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then draggingRestore = false end end)
-    end
-end))
-ConnectionManager:Add(restoreBtn.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then dragInputRestore = input end
-end))
-ConnectionManager:Add(UserInputService.InputChanged:Connect(function(input)
-    if input == dragInputRestore and draggingRestore then
-        local delta = input.Position - dragStartRestore
-        restoreBtn.Position = UDim2.new(startPosRestore.X.Scale, startPosRestore.X.Offset + delta.X, startPosRestore.Y.Scale, startPosRestore.Y.Offset + delta.Y)
-    end
-end))
-
--- END OF OLD FLOATING BUTTON SYSTEM (DISABLED)
---]]
+end
 
 -- Pages Setup
 local pages = {}
@@ -767,17 +699,19 @@ local function createPage(name)
     local page = new("ScrollingFrame", {
         Parent = contentBg,
         Size = UDim2.new(1, 0, 1, 0),
-        BackgroundTransparency = 1,
+        BackgroundColor3 = colors.bg1,
+        BackgroundTransparency = 0,
         ScrollBarThickness = 3,
         ScrollBarImageColor3 = colors.primary,
         CanvasSize = UDim2.new(0,0,0,0),
         AutomaticCanvasSize = Enum.AutomaticSize.Y,
         Visible = false,
         ClipsDescendants = false,
+        BorderSizePixel = 0,
         ZIndex = 5
     })
     new("UIListLayout", {Parent = page, Padding = UDim.new(0, 12), SortOrder = Enum.SortOrder.LayoutOrder})
-    new("UIPadding", {Parent = page, PaddingTop = UDim.new(0, 8), PaddingBottom = UDim.new(0, 8)})
+    new("UIPadding", {Parent = page, PaddingTop = UDim.new(0, 8), PaddingBottom = UDim.new(0, 8), PaddingRight = UDim.new(0, 4)})
     pages[name] = page
     return page
 end
@@ -794,9 +728,9 @@ mainPage.Visible = true
 -- Welcome Card (Dashboard)
 local welcomeCard = new("Frame", {
     Parent = mainPage,
-    Size = UDim2.new(1, 0, 0, 80),
+    Size = UDim2.new(1, -12, 0, 80), -- Reduced width to accommodate scrollbar
     BackgroundColor3 = colors.bg2,
-    BackgroundTransparency = 0.5,
+    BackgroundTransparency = 0, -- Ensure solid
     BorderSizePixel = 0,
     LayoutOrder = -1 
 })
@@ -912,7 +846,7 @@ local function createNavButton(text, icon, page, order)
 
     ConnectionManager:Add(btn.MouseEnter:Connect(function()
         if page ~= currentPage then
-            TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundTransparency=0.8}):Play()
+            TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3=colors.bg3, BackgroundTransparency=0}):Play()
         end
     end))
     ConnectionManager:Add(btn.MouseLeave:Connect(function()
@@ -950,14 +884,14 @@ local function makeCategory(parent, title, icon)
     local categoryFrame = new("Frame", {
         Parent = parent,
         Size = UDim2.new(1, 0, 0, 36),
-        BackgroundColor3 = colors.bg3,
-        BackgroundTransparency = 0.6,
+        BackgroundColor3 = colors.bg2,
+        BackgroundTransparency = 0,
         BorderSizePixel = 0,
         AutomaticSize = Enum.AutomaticSize.Y,
         ClipsDescendants = false,
         ZIndex = 6
     })
-    new("UICorner", {Parent = categoryFrame, CornerRadius = UDim.new(0, 6)})
+    new("UICorner", {Parent = categoryFrame, CornerRadius = UDim.new(0, 8)})
     
     local header = new("TextButton", {
         Parent = categoryFrame,
@@ -1177,11 +1111,11 @@ local function makeButton(parent, label, callback)
         Parent = parent,
         Size = UDim2.new(1, 0, 0, 32),
         BackgroundColor3 = colors.primary,
-        BackgroundTransparency = 0.3,
+        BackgroundTransparency = 0,
         BorderSizePixel = 0,
         ZIndex = 8
     })
-    new("UICorner", {Parent = btnFrame, CornerRadius = UDim.new(0, 6)})
+    new("UICorner", {Parent = btnFrame, CornerRadius = UDim.new(0, 8)})
     
     local button = new("TextButton", {
         Parent = btnFrame,
@@ -1217,14 +1151,14 @@ local function makeDropdown(parent, title, icon, items, onSelect, uniqueId, defa
     local dropdownFrame = new("Frame", {
         Parent = parent,
         Size = UDim2.new(1, 0, 0, 40),
-        BackgroundColor3 = colors.bg4,
-        BackgroundTransparency = 0.5,
+        BackgroundColor3 = colors.bg3,
+        BackgroundTransparency = 0,
         BorderSizePixel = 0,
         AutomaticSize = Enum.AutomaticSize.Y,
         ZIndex = 7,
         Name = uniqueId or "Dropdown"
     })
-    new("UICorner", {Parent = dropdownFrame, CornerRadius = UDim.new(0, 6)})
+    new("UICorner", {Parent = dropdownFrame, CornerRadius = UDim.new(0, 8)})
     
     local header = new("TextButton", {
         Parent = dropdownFrame,
@@ -1326,14 +1260,14 @@ local function makeDropdown(parent, title, icon, items, onSelect, uniqueId, defa
         local itemBtn = new("TextButton", {
             Parent = listContainer,
             Size = UDim2.new(1, 0, 0, 26),
-            BackgroundColor3 = colors.bg4,
-            BackgroundTransparency = 0.6,
+            BackgroundColor3 = colors.bg3,
+            BackgroundTransparency = 0,
             BorderSizePixel = 0,
             Text = "",
             AutoButtonColor = false,
             ZIndex = 11
         })
-        new("UICorner", {Parent = itemBtn, CornerRadius = UDim.new(0, 5)})
+        new("UICorner", {Parent = itemBtn, CornerRadius = UDim.new(0, 6)})
         
         local btnLabel = new("TextLabel", {
             Parent = itemBtn,
@@ -1351,7 +1285,7 @@ local function makeDropdown(parent, title, icon, items, onSelect, uniqueId, defa
         
         ConnectionManager:Add(itemBtn.MouseEnter:Connect(function()
             if selectedItem ~= itemName then
-                local t1 = TweenService:Create(itemBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0.3})
+                local t1 = TweenService:Create(itemBtn, TweenInfo.new(0.2), {BackgroundColor3 = colors.bg4})
                 local t2 = TweenService:Create(btnLabel, TweenInfo.new(0.2), {TextColor3 = colors.text})
                 ConnectionManager:AddTween(t1)
                 ConnectionManager:AddTween(t2)
@@ -1362,7 +1296,7 @@ local function makeDropdown(parent, title, icon, items, onSelect, uniqueId, defa
         
         ConnectionManager:Add(itemBtn.MouseLeave:Connect(function()
             if selectedItem ~= itemName then
-                local t1 = TweenService:Create(itemBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0.6})
+                local t1 = TweenService:Create(itemBtn, TweenInfo.new(0.2), {BackgroundColor3 = colors.bg3})
                 local t2 = TweenService:Create(btnLabel, TweenInfo.new(0.2), {TextColor3 = colors.textDim})
                 ConnectionManager:AddTween(t1)
                 ConnectionManager:AddTween(t2)
@@ -1701,7 +1635,7 @@ end
 -- ============================================
 -- CONFIG SYSTEM
 -- ============================================
-local ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/ZoyyLoader.lua"))()
+local ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/SecurityLoader.lua"))()
 
 -- Inject Local Config Management (Fixes Persistence)
 if ConfigSystem then
@@ -2708,7 +2642,7 @@ if WebhookModule then
     else
         -- Enable simple mode for security
         WebhookModule:SetSimpleMode(true)
-        print("✅ Webhook: Executor support detected!")
+        -- print("✅ Webhook: Executor support detected!")
     end
 end
 
@@ -3500,7 +3434,7 @@ local function RefreshConfigList()
             Size = UDim2.new(1, -8, 0, 30),
             BackgroundTransparency = 1,
             Text = "No saved configs yet",
-            Font = Enum.Font.GothamItalic,
+            Font = Enum.Font.Gotham, -- Fixed invalid font
             TextSize = 11,
             TextColor3 = colors.textDim,
             ZIndex = 8
@@ -3768,45 +3702,25 @@ makeButton(catConfig, "🔃 Reset to Default", function()
 end)
 
 -- ============================================
--- INFO PAGE - MODERN REBUILD
+-- INFO PAGE
 -- ============================================
 
--- Hero Section with Logo
-local heroContainer = new("Frame", {
+-- Main Info Container (Single Column)
+local infoContainer = new("Frame", {
     Parent = infoPage,
-    Size = UDim2.new(1, 0, 0, 120),
+    Size = UDim2.new(1, 0, 0, 220),
     BackgroundColor3 = colors.bg3,
-    BackgroundTransparency = 0.5,
+    BackgroundTransparency = 0.6,
     BorderSizePixel = 0,
     ZIndex = 6
 })
-new("UICorner", {Parent = heroContainer, CornerRadius = UDim.new(0, 12)})
-new("UIStroke", {
-    Parent = heroContainer,
-    Color = colors.primary,
-    Thickness = 1,
-    Transparency = 0.9
-})
-
--- Gradient overlay
-local heroGradient = new("UIGradient", {
-    Parent = heroContainer,
-    Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, colors.primary),
-        ColorSequenceKeypoint.new(1, colors.secondary)
-    },
-    Rotation = 45,
-    Transparency = NumberSequence.new{
-        NumberSequenceKeypoint.new(0, 0.95),
-        NumberSequenceKeypoint.new(1, 0.98)
-    }
-})
+new("UICorner", {Parent = infoContainer, CornerRadius = UDim.new(0, 12)})
 
 -- Logo
 local logoIcon = new("ImageLabel", {
-    Parent = heroContainer,
-    Size = UDim2.new(0, 50, 0, 50),
-    Position = UDim2.new(0, 15, 0.5, -25),
+    Parent = infoContainer,
+    Size = UDim2.new(0, 60, 0, 60),
+    Position = UDim2.new(0, 15, 0, 15),
     BackgroundColor3 = colors.bg2,
     BackgroundTransparency = 0.3,
     BorderSizePixel = 0,
@@ -3814,80 +3728,52 @@ local logoIcon = new("ImageLabel", {
     ScaleType = Enum.ScaleType.Fit,
     ZIndex = 7
 })
-new("UICorner", {Parent = logoIcon, CornerRadius = UDim.new(0, 10)})
-new("UIStroke", {
-    Parent = logoIcon,
-    Color = colors.primary,
-    Thickness = 2,
-    Transparency = 0.7
-})
+new("UICorner", {Parent = logoIcon, CornerRadius = UDim.new(0, 12)})
 
 -- Title
-local titleLabel = new("TextLabel", {
-    Parent = heroContainer,
-    Size = UDim2.new(1, -80, 0, 30),
-    Position = UDim2.new(0, 75, 0, 20),
+new("TextLabel", {
+    Parent = infoContainer,
+    Size = UDim2.new(1, -90, 0, 28),
+    Position = UDim2.new(0, 85, 0, 18),
     BackgroundTransparency = 1,
-    Text = "ZoyyHub v2.3.1",
+    Text = "ZoyyHub V1",
     Font = Enum.Font.GothamBold,
-    TextSize = 18,
+    TextSize = 20,
     TextColor3 = colors.primary,
     TextXAlignment = Enum.TextXAlignment.Left,
-    TextStrokeTransparency = 0.9,
     ZIndex = 7
 })
 
 -- Subtitle
-local subtitleLabel = new("TextLabel", {
-    Parent = heroContainer,
-    Size = UDim2.new(1, -80, 0, 20),
-    Position = UDim2.new(0, 75, 0, 48),
+new("TextLabel", {
+    Parent = infoContainer,
+    Size = UDim2.new(1, -90, 0, 18),
+    Position = UDim2.new(0, 85, 0, 48),
     BackgroundTransparency = 1,
     Text = "Premium Fish It Script",
     Font = Enum.Font.Gotham,
-    TextSize = 11,
+    TextSize = 10,
     TextColor3 = colors.textDim,
     TextXAlignment = Enum.TextXAlignment.Left,
     ZIndex = 7
 })
 
--- Badge
-local freeBadge = new("TextLabel", {
-    Parent = heroContainer,
-    Size = UDim2.new(0, 120, 0, 22),
-    Position = UDim2.new(0, 75, 0, 75),
-    BackgroundColor3 = colors.success,
-    BackgroundTransparency = 0.9,
+-- Separator Line
+new("Frame", {
+    Parent = infoContainer,
+    Size = UDim2.new(1, -30, 0, 1),
+    Position = UDim2.new(0, 15, 0, 85),
+    BackgroundColor3 = colors.primary,
+    BackgroundTransparency = 0.8,
     BorderSizePixel = 0,
-    Text = "✓ FREE FOREVER",
-    Font = Enum.Font.GothamBold,
-    TextSize = 9,
-    TextColor3 = colors.success,
     ZIndex = 7
 })
-new("UICorner", {Parent = freeBadge, CornerRadius = UDim.new(0, 5)})
-new("UIStroke", {
-    Parent = freeBadge,
-    Color = colors.success,
-    Thickness = 1,
-    Transparency = 0.5
-})
 
--- Features Section
-local featuresContainer = new("Frame", {
-    Parent = infoPage,
-    Size = UDim2.new(1, 0, 0, 140),
-    BackgroundColor3 = colors.bg3,
-    BackgroundTransparency = 0.6,
-    BorderSizePixel = 0,
-    ZIndex = 6
-})
-new("UICorner", {Parent = featuresContainer, CornerRadius = UDim.new(0, 12)})
-
-local featuresTitle = new("TextLabel", {
-    Parent = featuresContainer,
-    Size = UDim2.new(1, -24, 0, 20),
-    Position = UDim2.new(0, 12, 0, 12),
+-- Features Title
+new("TextLabel", {
+    Parent = infoContainer,
+    Size = UDim2.new(1, -30, 0, 20),
+    Position = UDim2.new(0, 15, 0, 95),
     BackgroundTransparency = 1,
     Text = "⚡ KEY FEATURES",
     Font = Enum.Font.GothamBold,
@@ -3897,158 +3783,57 @@ local featuresTitle = new("TextLabel", {
     ZIndex = 7
 })
 
-local featuresText = new("TextLabel", {
-    Parent = featuresContainer,
-    Size = UDim2.new(1, -24, 1, -40),
-    Position = UDim2.new(0, 12, 0, 35),
+-- Features List
+new("TextLabel", {
+    Parent = infoContainer,
+    Size = UDim2.new(1, -30, 0, 100),
+    Position = UDim2.new(0, 15, 0, 118),
     BackgroundTransparency = 1,
-    Text = [[
-• Ultra-Fast Auto Fishing (Multiple Modes)
-• Quest & Temple Automation
-• Smart Teleport System
-• Auto Sell & Merchant
-• Webhook Integration
-• Hide Stats & Anti-AFK
-• Memory Optimized (~30 MB)]],
+    Text = "• Ultra-Fast Auto Fishing (Multiple Modes)\n• Quest & Temple Automation\n• Smart Teleport System\n• Auto Sell & Merchant\n• Webhook Integration\n• Hide Stats & Anti-AFK\n• Memory Optimized (~30 MB)",
     Font = Enum.Font.Gotham,
     TextSize = 9,
     TextColor3 = colors.text,
     TextWrapped = true,
     TextXAlignment = Enum.TextXAlignment.Left,
     TextYAlignment = Enum.TextYAlignment.Top,
-    LineHeight = 1.3,
+    LineHeight = 1.2,
     ZIndex = 7
 })
 
--- Discord Button (Enhanced)
+-- Discord Section
 local discordContainer = new("Frame", {
     Parent = infoPage,
-    Size = UDim2.new(1, 0, 0, 70),
+    Size = UDim2.new(1, 0, 0, 60),
     BackgroundColor3 = Color3.fromRGB(88, 101, 242),
     BackgroundTransparency = 0.95,
     BorderSizePixel = 0,
     ZIndex = 6
 })
 new("UICorner", {Parent = discordContainer, CornerRadius = UDim.new(0, 12)})
-new("UIStroke", {
-    Parent = discordContainer,
-    Color = Color3.fromRGB(88, 101, 242),
-    Thickness = 1.5,
-    Transparency = 0.7
-})
-
-local discordTitle = new("TextLabel", {
-    Parent = discordContainer,
-    Size = UDim2.new(1, -24, 0, 18),
-    Position = UDim2.new(0, 12, 0, 10),
-    BackgroundTransparency = 1,
-    Text = "💬 JOIN OUR COMMUNITY",
-    Font = Enum.Font.GothamBold,
-    TextSize = 10,
-    TextColor3 = colors.text,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    ZIndex = 7
-})
 
 local linkButton = new("TextButton", {
     Parent = discordContainer,
-    Size = UDim2.new(1, -24, 0, 32),
-    Position = UDim2.new(0, 12, 0, 32),
+    Size = UDim2.new(1, -24, 0, 40),
+    Position = UDim2.new(0, 12, 0, 10),
     BackgroundColor3 = Color3.fromRGB(88, 101, 242),
     BackgroundTransparency = 0.85,
     BorderSizePixel = 0,
-    Text = "🔗 discord.gg/tshTkdDx",
+    Text = "🔗 discord.gg/tshTkdDx  (Click to Copy)",
     Font = Enum.Font.GothamBold,
     TextSize = 11,
     TextColor3 = Color3.fromRGB(88, 101, 242),
-    AutoButtonColor = false,
     ZIndex = 7
 })
 new("UICorner", {Parent = linkButton, CornerRadius = UDim.new(0, 8)})
 
-local linkStroke = new("UIStroke", {
-    Parent = linkButton,
-    Color = Color3.fromRGB(88, 101, 242),
-    Thickness = 1.5,
-    Transparency = 0.6
-})
-
--- Hover effect
-linkButton.MouseEnter:Connect(function()
-    TweenService:Create(linkButton, TweenInfo.new(0.2), {
-        BackgroundTransparency = 0.7,
-        TextColor3 = Color3.fromRGB(255, 255, 255)
-    }):Play()
-    TweenService:Create(linkStroke, TweenInfo.new(0.2), {
-        Thickness = 2,
-        Transparency = 0.3
-    }):Play()
-end)
-
-linkButton.MouseLeave:Connect(function()
-    TweenService:Create(linkButton, TweenInfo.new(0.2), {
-        BackgroundTransparency = 0.85,
-        TextColor3 = Color3.fromRGB(88, 101, 242)
-    }):Play()
-    TweenService:Create(linkStroke, TweenInfo.new(0.2), {
-        Thickness = 1.5,
-        Transparency = 0.6
-    }):Play()
-end)
-
 ConnectionManager:Add(linkButton.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.gg/tshTkdDx")
-    linkButton.Text = "✅ Copied to Clipboard!"
-    task.wait(2)
-    linkButton.Text = "🔗 discord.gg/tshTkdDx"
-end))
-
--- Module Status
-local moduleStatusContainer = new("Frame", {
-    Parent = infoPage,
-    Size = UDim2.new(1, 0, 0, 150),
-    BackgroundColor3 = colors.bg3,
-    BackgroundTransparency = 0.6,
-    BorderSizePixel = 0,
-    ZIndex = 6
-})
-new("UICorner", {Parent = moduleStatusContainer, CornerRadius = UDim.new(0, 8)})
-
-local moduleStatusText = new("TextLabel", {
-    Parent = moduleStatusContainer,
-    Size = UDim2.new(1, -24, 1, -24),
-    Position = UDim2.new(0, 12, 0, 12),
-    BackgroundTransparency = 1,
-    Text = "Loading module status...",
-    Font = Enum.Font.Gotham,
-    TextSize = 8,
-    TextColor3 = colors.text,
-    TextWrapped = true,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    TextYAlignment = Enum.TextYAlignment.Top,
-    ZIndex = 7
-})
-
-TrackedSpawn(function()
-    task.wait(0.5)
     pcall(function()
-        if moduleStatusText and moduleStatusText.Parent then
-            local statusText = "📦 MODULE STATUS (" .. loadedModules .. "/" .. totalModules .. " loaded)\n━━━━━━━━━━━━━━━━━━━━━━\n"
-            
-            local sortedModules = {}
-            for name, status in pairs(ModuleStatus) do
-                table.insert(sortedModules, {name = name, status = status})
-            end
-            table.sort(sortedModules, function(a, b) return a.name < b.name end)
-            
-            for _, moduleInfo in ipairs(sortedModules) do
-                statusText = statusText .. moduleInfo.status .. " " .. moduleInfo.name .. "\n"
-            end
-            
-            moduleStatusText.Text = statusText
-        end
+        setclipboard("https://discord.gg/tshTkdDx")
+        linkButton.Text = "✅ Copied to Clipboard!"
+        task.wait(2)
+        linkButton.Text = "🔗 discord.gg/tshTkdDx  (Click to Copy)"
     end)
-end)
+end))
 
 -- ============================================
 -- MINIMIZE SYSTEM WITH AUTO-SAVE
@@ -4266,6 +4051,44 @@ ConnectionManager:Add(scriptHeader.InputBegan:Connect(function(input)
     end
 end))
 
+ConnectionManager:Add(UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    -- LeftAlt = Toggle Minimize/Maximize
+    if input.KeyCode == Enum.KeyCode.LeftAlt then
+        local focused = UserInputService:GetFocusedTextBox()
+        if not focused then 
+            -- Inline toggle logic (avoid scope issues)
+            if not gui or not gui.Parent then return end
+            if win.Visible then
+                -- Minimize: Hide window, show floating button
+                win.Visible = false
+                -- Find and show floating button
+                local pGui = localPlayer:FindFirstChild("PlayerGui")
+                if pGui then
+                    local floatingGui = pGui:FindFirstChild("ZoyyHubFloatingButtonGui")
+                    if floatingGui then
+                        local btn = floatingGui:FindFirstChild("ZoyyHubFloatingButton")
+                        if btn then btn.Visible = true end
+                    end
+                end
+            else
+                -- Maximize: Show window, hide floating button
+                win.Visible = true
+                win.Size = UDim2.new(0, 0, 0, 0)
+                TweenService:Create(win, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Size = windowSize}):Play()
+                -- Find and hide floating button
+                local pGui = localPlayer:FindFirstChild("PlayerGui")
+                if pGui then
+                    local floatingGui = pGui:FindFirstChild("ZoyyHubFloatingButtonGui")
+                    if floatingGui then
+                        local btn = floatingGui:FindFirstChild("ZoyyHubFloatingButton")
+                        if btn then btn.Visible = false end
+                    end
+                end
+            end
+        end
+    end
+end))
+
 ConnectionManager:Add(UserInputService.InputChanged:Connect(function(input)
     if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
         local delta = input.Position - dragStart
@@ -4292,6 +4115,7 @@ end))
 
 ConnectionManager:Add(UserInputService.InputChanged:Connect(function(input)
     if resizing and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        if not startSize or not resizeStart then resizing = false return end -- Guard clause
         local delta = input.Position - resizeStart
         local newWidth = math.clamp(startSize.X.Offset + delta.X, minWindowSize.X, maxWindowSize.X)
         local newHeight = math.clamp(startSize.Y.Offset + delta.Y, minWindowSize.Y, maxWindowSize.Y)
@@ -4320,7 +4144,7 @@ TrackedSpawn(function()
     })
     
     local tween2 = TweenService:Create(win, TweenInfo.new(0.5), {
-        BackgroundTransparency = 0.25
+        BackgroundTransparency = 0
     })
     
     ConnectionManager:AddTween(tween1)
@@ -4783,7 +4607,7 @@ TrackedSpawn(function()
         
         print("✅ Low-end optimizations applied!")
     else
-        print("✅ Standard performance mode!")
+        -- print("✅ Standard performance mode!")
     end
 end)
 
@@ -4819,35 +4643,32 @@ end
 -- ============================================
 
 -- Final success notification
-SendNotification("✨ ZoyyHub GUI v2.3.1", "Loaded! " .. loadedModules .. "/" .. totalModules .. " modules ready.", 5)
+SendNotification("✨ ZoyyHub GUI v2.3.1", "Script loaded successfully!", 5)
 
 -- Console output
-print("\n━━━━━━━━━━━━━━━━━━━━━━")
-print("✨ ZoyyHubGUI v2.3.1 Performance Optimized")
-print("━━━━━━━━━━━━━━━━━━━━━━")
-print("📦 Modules: " .. loadedModules .. "/" .. totalModules)
+-- Console output
+-- print("✨ ZoyyHubGUI v2.3.1 Performance Optimized")
+-- print("📦 Modules: " .. loadedModules .. "/" .. totalModules)
 
-local hideStatsOK = (HideStats ~= nil)
-local webhookOK = (WebhookModule ~= nil)
-local notifyOK = (GetModule("Notify") ~= nil)
+-- local hideStatsOK = (HideStats ~= nil)
+-- local webhookOK = (WebhookModule ~= nil)
+-- local notifyOK = (GetModule("Notify") ~= nil)
 
-print("✅ HideStats: " .. (hideStatsOK and "OK" or "MISSING"))
-print("✅ Webhook: " .. (webhookOK and "OK" or "MISSING"))
-print("✅ Notify: " .. (notifyOK and "OK" or "MISSING"))
+-- print("✅ HideStats: " .. (hideStatsOK and "OK" or "MISSING"))
+-- print("✅ Webhook: " .. (webhookOK and "OK" or "MISSING"))
+-- print("✅ Notify: " .. (notifyOK and "OK" or "MISSING"))
 
-if hideStatsOK and webhookOK and notifyOK then
-    print("🎉 All critical systems operational!")
-else
-    print("⚠️  Some modules missing")
-end
+-- if hideStatsOK and webhookOK and notifyOK then
+--     print("🎉 All critical systems operational!")
+-- else
+--     print("⚠️  Some modules missing")
+-- end
 
-print("━━━━━━━━━━━━━━━━━━━━━━")
-print("💾 Config System: " .. (ConfigSystem and "Active" or "Inactive"))
-print("📱 Device: " .. (isMobile and "Mobile" or "Desktop"))
-print("🔗 Connections Tracked: " .. #ConnectionManager.connections)
-print("🎬 Tweens Tracked: " .. #ConnectionManager.tweens)
-print("━━━━━━━━━━━━━━━━━━━━━━")
-print("🎮 GUI Ready! Enjoy!\n")
+-- print("💾 Config System: " .. (ConfigSystem and "Active" or "Inactive"))
+-- print("📱 Device: " .. (isMobile and "Mobile" or "Desktop"))
+-- print("🔗 Connections Tracked: " .. #ConnectionManager.connections)
+-- print("🎬 Tweens Tracked: " .. #ConnectionManager.tweens)
+-- print("🎮 GUI Ready! Enjoy!\n")
 
 -- ============================================
 -- MEMORY LEAK PREVENTION SUMMARY
@@ -5148,7 +4969,7 @@ ISSUE: GUI not loading
   ➜ Check console for errors
 
 ISSUE: Module failed to load
-  ➜ Check if ZoyyLoader is working
+  ➜ Check if SecurityLoader is working
   ➜ Verify internet connection
   ➜ Try again after 30 seconds
   ➜ Check module availability
@@ -5267,74 +5088,8 @@ Free to use, not for sale.
 -- SCRIPT INITIALIZATION COMPLETE
 -- ============================================
 
-print([[
-╔═══════════════════════════════════════════════════════════════════════╗
-║                                                                       ║
-║                   ██╗  ██╗   ██╗███╗   ██╗██╗  ██╗                   ║
-║                   ██║  ╚██╗ ██╔╝████╗  ██║╚██╗██╔╝                   ║
-║                   ██║   ╚████╔╝ ██╔██╗ ██║ ╚███╔╝                    ║
-║                   ██║    ╚██╔╝  ██║╚██╗██║ ██╔██╗                    ║
-║                   ███████╗██║   ██║ ╚████║██╔╝ ██╗                   ║
-║                   ╚══════╝╚═╝   ╚═╝  ╚═══╝╚═╝  ╚═╝                   ║
-║                                                                       ║
-║                      v2.3.1 Performance Optimized                     ║
-║                          Memory Leak Fixed                            ║
-║                                                                       ║
-╚═══════════════════════════════════════════════════════════════════════╝
-
-✨ GUI Successfully Loaded!
-📦 Modules Loaded: ]] .. loadedModules .. [[/]] .. totalModules .. [[
-
-🔧 Features:
-   ✓ Auto Fishing (Fast & Perfect)
-   ✓ Blatant Modes (4 variants)
-   ✓ Support Features (10+ tools)
-   ✓ Teleport System (Location/Player/Event)
-   ✓ Shop Features (Auto Sell/Buy)
-   ✓ Webhook Integration (Discord)
-   ✓ Camera View (Zoom/Freecam)
-   ✓ Performance Tools (FPS Boost)
-   ✓ Config System (Auto-save)
-
-💾 Memory Optimized:
-   ✓ Connection Management
-   ✓ Tween Cleanup
-   ✓ Module Lifecycle
-   ✓ Table Cleanup
-   ✓ No Memory Leaks
-
-📱 Device Support:
-   ✓ Desktop (Windows/Mac)
-   ✓ Mobile (iOS/Android)
-   ✓ Low-End Devices
-
-🎮 Ready to Use!
-   • Drag header to move
-   • Resize from corner
-   • Minimize to icon
-   • Settings auto-save
-
-💬 Support: https://discord.gg/tshTkdDx
-🎉 Enjoy!
-]])
-
--- ============================================
--- FINAL MEMORY USAGE REPORT
--- ============================================
-TrackedSpawn(function()
-    task.wait(3)
-    
-    local stats = game:GetService("Stats")
-    local memoryUsed = stats:GetTotalMemoryUsageMb()
-    
-    print("\n📊 Final Memory Report:")
-    print("   Memory Usage: " .. string.format("%.2f", memoryUsed) .. " MB")
-    print("   Connections: " .. #ConnectionManager.connections)
-    print("   Tweens: " .. #ConnectionManager.tweens)
-    print("   Modules: " .. loadedModules .. "/" .. totalModules)
-    print("   Status: ✅ All systems operational!")
-    print("\n✨ LynxGUI v2.3.1 - Ready!\n")
-end)
+-- Success message after everything loads
+print("✅ ZoyyHub loaded successfully!")
 
 -- ============================================
 -- KEEP GUI ALIVE
