@@ -15,25 +15,27 @@ function Notification.Send(title, text, duration)
     if not success then
         pcall(function()
             if writefile then
-                local filePath = "Delta/Error/notification_errors.log"
+                -- Path untuk Android Delta
+                local filePath = "notification_errors.log"
                 
-                -- Baca file lama (jika ada)
+                -- Baca file lama
                 local oldContent = ""
-                if readfile and isfile(filePath) then
+                if readfile and isfile and isfile(filePath) then
                     oldContent = readfile(filePath)
                 end
                 
-                -- Tambahkan error baru
+                -- Log baru
                 local newLog = string.format(
-                    "[%s] %s - %s | Error: %s\n",
-                    os.date("%Y-%m-%d %H:%M:%S"),
+                    "[%s] ERROR\nTitle: %s\nText: %s\nError: %s\n---\n\n",
+                    os.date("%d/%m/%Y %H:%M:%S"),
                     title,
                     text,
-                    errorMsg
+                    tostring(errorMsg)
                 )
                 
+                -- Simpan
                 writefile(filePath, oldContent .. newLog)
-                print("✓ Error logged to Delta/Error/notification_errors.log")
+                print("✓ Error saved to Delta folder")
             end
         end)
         
