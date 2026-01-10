@@ -103,12 +103,12 @@ local function createScriptNameLabel(nameLabel, billboard)
         originalNamePos.Y.Offset
     )
     
-    local lynxFrame = Instance.new("Frame")
-    lynxFrame.Name = "ZoyyHubFrame"
-    lynxFrame.Size = nameFrame.Size
-    lynxFrame.Position = originalNamePos
-    lynxFrame.BackgroundTransparency = 1
-    lynxFrame.Parent = billboard
+    local zoyyFrame = Instance.new("Frame")
+    zoyyFrame.Name = "ZoyyHubFrame"
+    zoyyFrame.Size = nameFrame.Size
+    zoyyFrame.Position = originalNamePos
+    zoyyFrame.BackgroundTransparency = 1
+    zoyyFrame.Parent = billboard
     
     local scriptLabel = nameLabel:Clone()
     scriptLabel.Name = "ZoyyHubLabel"
@@ -117,11 +117,11 @@ local function createScriptNameLabel(nameLabel, billboard)
     scriptLabel.Font = Enum.Font.GothamBold
     scriptLabel.TextStrokeTransparency = 0.5
     scriptLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    scriptLabel.Parent = lynxFrame
+    scriptLabel.Parent = zoyyFrame
     
     createMovingGradient(scriptLabel)
     
-    return lynxFrame
+    return zoyyFrame
 end
 
 -- Fungsi untuk menghapus semua script name labels
@@ -135,8 +135,8 @@ local function removeAllScriptNames()
     local overhead = hrp:FindFirstChild("Overhead")
     if not overhead then return end
     
-    local lynxFrame = overhead:FindFirstChild("ZoyyHubFrame")
-    if lynxFrame then
+    local zoyyFrame = overhead:FindFirstChild("ZoyyHubFrame")
+    if zoyyFrame then
         for threadId, _ in pairs(ActiveGradientThreads) do
             ActiveGradientThreads[threadId] = nil
         end
@@ -155,7 +155,7 @@ local function removeAllScriptNames()
             end
         end
         
-        lynxFrame:Destroy()
+        zoyyFrame:Destroy()
     end
 end
 
@@ -239,7 +239,7 @@ function HideStatsModule.Disable()
 end
 
 function HideStatsModule.SetFakeName(name)
-    FakeName = name or "Guest"
+    FakeName = name or "ZoyyHub"
     if HideStatsEnabled then
         updateStats()
     end
