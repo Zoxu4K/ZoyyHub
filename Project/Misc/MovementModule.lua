@@ -1,56 +1,3 @@
--- Movement Features
-local catMovement = makeCategory(settingsPage, "Player Utility", "🏃")
-
--- Sprint Speed Input
-InputReferences.SprintSpeed = makeInput(catMovement, "Sprint Speed", GetConfigValue("Movement.SprintSpeed", 50), function(v)
-    SetConfigValue("Movement.SprintSpeed", v)
-    local MovementModule = GetModule("MovementModule")
-    if MovementModule then MovementModule.SetSprintSpeed(v) end
-end)
-
--- Sprint Toggle
-ToggleReferences.Sprint = makeToggle(catMovement, "Enable Sprint", function(on)
-    SetConfigValue("Movement.SprintEnabled", on)
-    local MovementModule = GetModule("MovementModule")
-    if MovementModule then
-        if on then 
-            MovementModule.EnableSprint()
-        else 
-            MovementModule.DisableSprint()
-        end
-    end
-end)
-
--- Infinite Jump Toggle
-ToggleReferences.InfiniteJump = makeToggle(catMovement, "Enable Infinite Jump", function(on)
-    SetConfigValue("Movement.InfiniteJump", on)
-    local MovementModule = GetModule("MovementModule")
-    if MovementModule then
-        if on then 
-            MovementModule.EnableInfiniteJump()
-        else 
-            MovementModule.DisableInfiniteJump()
-        end
-    end
-end)
-
--- No Clip Toggle (NEW!)
-ToggleReferences.NoClip = makeToggle(catMovement, "Enable No Clip", function(on)
-    SetConfigValue("Movement.NoClip", on)
-    local MovementModule = GetModule("MovementModule")
-    if MovementModule then
-        if on then 
-            MovementModule.EnableNoClip()
-        else 
-            MovementModule.DisableNoClip()
-        end
-    end
-end)
-```
-
-## **2. Update MovementModule.lua (FULL CODE):**
-
-```lua
 local MovementModule = {}
 
 -- Services
@@ -62,6 +9,7 @@ local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
+local rootPart = character:WaitForChild("HumanoidRootPart")
 
 -- Settings
 MovementModule.Settings = {
@@ -209,31 +157,39 @@ function MovementModule.IsInfiniteJumpEnabled()
 end
 
 -- ============================================
--- NO CLIP FUNCTIONS (NEW!)
+-- NO CLIP FUNCTIONS (FIXED!)
 -- ============================================
-local function setCharacterCollision(enabled)
-    if not character then return end
-    
-    for _, part in pairs(character:GetDescendants()) do
-        if part:IsA("BasePart") then
-            part.CanCollide = enabled
-        end
-    end
-end
-
 local function enableNoClip()
     if noClipConnection then
         noClipConnection:Disconnect()
     end
     
-    -- Disable collision
-    setCharacterCollision(false)
-    
-    -- Loop to maintain no collision
-    noClipConnection = RunService.Stepped:Connect(function()
-        if MovementModule.Settings.NoClipEnabled and character then
-            setCharacterCollision(false)
+    -- Disable collision immediately
+    for _, part in pairs(character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            pcall(function()
+                part.CanCollide = false
+            end)
         end
+    end
+    
+    -- Loop untuk maintain no collision (gunakan Stepped untuk lebih responsif)
+    noClipConnection = RunService.Stepped:Connect(function()
+        if not MovementModule.Settings.NoClipEnabled then return end
+        
+        pcall(function()
+            -- Disable collision untuk semua parts
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+            
+            -- Pastikan humanoid tetap bisa jalan
+            if humanoid then
+                humanoid:ChangeState(Enum.HumanoidStateType.Running)
+            end
+        end)
     end)
 end
 
@@ -241,7 +197,18 @@ function MovementModule.EnableNoClip()
     if MovementModule.Settings.NoClipEnabled then return false end
     
     MovementModule.Settings.NoClipEnabled = true
+    
+    -- Pastikan character dan rootPart ada
+    if not character or not rootPart then
+        character = player.Character
+        if character then
+            rootPart = character:WaitForChild("HumanoidRootPart")
+            humanoid = character:WaitForChild("Humanoid")
+        end
+    end
+    
     enableNoClip()
+    print("[NoClip] ENABLED")
     
     return true
 end
@@ -251,13 +218,22 @@ function MovementModule.DisableNoClip()
     
     MovementModule.Settings.NoClipEnabled = false
     
+    -- Disconnect loop
     if noClipConnection then
         noClipConnection:Disconnect()
         noClipConnection = nil
     end
     
     -- Re-enable collision
-    setCharacterCollision(true)
+    pcall(function()
+        for _, part in pairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = true
+            end
+        end
+    end)
+    
+    print("[NoClip] DISABLED")
     
     return true
 end
@@ -272,6 +248,7 @@ end
 table.insert(connections, player.CharacterAdded:Connect(function(newChar)
     character = newChar
     humanoid = character:WaitForChild("Humanoid")
+    rootPart = character:WaitForChild("HumanoidRootPart")
     
     -- Re-apply sprint if enabled
     if MovementModule.Settings.SprintEnabled then
@@ -287,8 +264,9 @@ table.insert(connections, player.CharacterAdded:Connect(function(newChar)
     
     -- Re-apply no clip if enabled
     if MovementModule.Settings.NoClipEnabled then
-        task.wait(0.1)
+        task.wait(0.2) -- Delay lebih lama untuk pastikan semua part sudah load
         enableNoClip()
+        print("[NoClip] Re-enabled after respawn")
     end
 end))
 
