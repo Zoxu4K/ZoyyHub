@@ -3005,6 +3005,19 @@ ToggleReferences.InfiniteJump = makeToggle(catMovement, "Enable Infinite Jump", 
     end
 end)
 
+-- No Clip Toggle (NEW!)
+ToggleReferences.NoClip = makeToggle(catMovement, "Enable No Clip", function(on)
+    SetConfigValue("Movement.NoClip", on)
+    local MovementModule = GetModule("MovementModule")
+    if MovementModule then
+        if on then 
+            MovementModule.EnableNoClip()
+        else 
+            MovementModule.DisableNoClip()
+        end
+    end
+end)
+
 local catBoost = makeCategory(settingsPage, "Performance", "⚡")
 local FPSBooster = GetModule("FPSBooster")
 local DisableRenderingModule = GetModule("DisableRendering")
