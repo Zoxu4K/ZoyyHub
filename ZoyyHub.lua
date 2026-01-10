@@ -2728,6 +2728,16 @@ ToggleReferences.AntiAFK = makeToggle(catAFK, "Enable Anti-AFK", function(on)
     end
 end)
 
+TrackedSpawn(function()
+    task.wait(1.5)
+    if AntiAFK and ToggleReferences.AntiAFK then
+        AntiAFK.Start()
+        ToggleReferences.AntiAFK.setOn(true, true)
+        SetConfigValue("Settings.AntiAFK", true)
+        print("✅ [AutoStart] Anti-AFK otomatis aktif!")
+    end
+end)
+
 local catMovement = makeCategory(settingsPage, "Player Utility", "🏃")
 
 InputReferences.SprintSpeed = makeInput(catMovement, "Sprint Speed", GetConfigValue("Movement.SprintSpeed", 50), function(v)
