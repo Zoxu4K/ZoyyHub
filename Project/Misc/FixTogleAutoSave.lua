@@ -1,7 +1,3 @@
--- LynxGUI_v2.3_Fixed.lua - Part 1/8
--- Core Setup, Services, Loading System
--- FREE NOT FOR SALE
-
 -- ❌ THIS FILE IS DEPRECATED - USE ZoyyHub.lua INSTEAD ❌
 print("⚠️ WARNING: FixTogleAutoSave.lua is deprecated!")
 print("ℹ️ Please use ZoyyHub.lua instead")
@@ -12,14 +8,14 @@ return -- TERMINATE IMMEDIATELY
 -- UNIVERSAL LOCK CHECK (Prevent Duplicate with Main GUI)
 -- ============================================
 if getgenv then
-    if getgenv().LYNX_GUI_RUNNING then
-        warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
+    if getgenv().ZOYY_GUI_RUNNING then
+        warn("⚠️ Main ZOYY GUI is already running! This old version will not load.")
         warn("ℹ️ Use ZoyyHub.lua instead of FixTogleAutoSave.lua")
         return
     end
 elseif _G then
-    if _G.LYNX_GUI_RUNNING then
-        warn("⚠️ Main LYNX GUI is already running! This old version will not load.")
+    if _G.ZOYY_GUI_RUNNING then
+        warn("⚠️ Main ZOYY GUI is already running! This old version will not load.")
         warn("ℹ️ Use ZoyyHub.lua instead of FixTogleAutoSave.lua")
         return
     end
@@ -28,14 +24,14 @@ end
 -- ============================================
 -- ANTI-DUPLICATION SYSTEM
 -- ============================================
-local GUI_IDENTIFIER = "LynxGUI_Galaxy_v2.3"
+local GUI_IDENTIFIER = "ZoyyGUI_Galaxy_v2.3"
 
 local function CloseExistingGUI()
     local playerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
     local existingGUI = playerGui:FindFirstChild(GUI_IDENTIFIER)
     
     if existingGUI then
-        print("🔄 Existing Lynx GUI detected - Closing old instance...")
+        print("🔄 Existing Zoyy GUI detected - Closing old instance...")
         
         pcall(function()
             local mainFrame = existingGUI:FindFirstChild("Frame")
@@ -111,7 +107,7 @@ function LoadingNotification.Create()
     
     local success = pcall(function()
         local notifGui = new("ScreenGui", {
-            Name = "LynxLoadingNotification_iOS",
+            Name = "ZoyyLoadingNotification_iOS",
             Parent = localPlayer.PlayerGui,
             ResetOnSpawn = false,
             ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
@@ -144,7 +140,7 @@ function LoadingNotification.Create()
             Size = UDim2.new(1, -80, 0, 24),
             Position = UDim2.new(0, 70, 0, 12),
             BackgroundTransparency = 1,
-            Text = "Lynx Script Loading",
+            Text = "Zoyy Script Loading",
             Font = Enum.Font.GothamBold,
             TextSize = 14,
             TextColor3 = Color3.fromRGB(255, 255, 255),
@@ -226,7 +222,7 @@ function LoadingNotification.Complete(success, loadedCount, totalCount)
     
     pcall(function()
         if LoadingNotification.TitleLabel then
-            LoadingNotification.TitleLabel.Text = success and "Lynx Ready!" or "Loading Complete"
+            LoadingNotification.TitleLabel.Text = success and "Zoyy Ready!" or "Loading Complete"
         end
         
         if LoadingNotification.StatusLabel then
@@ -276,25 +272,25 @@ local CRITICAL_MODULES = {
 LoadingNotification.Create()
 
 print("━━━━━━━━━━━━━━━━━━━━━━")
-print("🔄 LYNX GUI v2.3 - LOADING")
+print("🔄 ZOYY GUI v2.3 - LOADING")
 print("━━━━━━━━━━━━━━━━━━━━━━")
 
 -- Load Security Loader
-local SecurityLoader
+local Loader
 local loaderSuccess, loaderError = pcall(function()
-    SecurityLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/SecurityLoader.lua"))()
+    Loader = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/Loader.lua"))()
 end)
 
-if not loaderSuccess or not SecurityLoader then
+if not loaderSuccess or not Loader then
     local errorMsg = loaderError and tostring(loaderError) or "Unknown error"
     LoadingNotification.Complete(false, 0, 1)
-    SendNotification("❌ CRITICAL ERROR", "SecurityLoader failed!", 10)
-    warn("❌ CRITICAL: SecurityLoader failed to load - " .. errorMsg)
+    SendNotification("❌ CRITICAL ERROR", "Loader failed!", 10)
+    warn("❌ CRITICAL: Loader failed to load - " .. errorMsg)
     return
 end
 
-print("✅ SecurityLoader loaded successfully")
-LoadingNotification.Update(1, 32, "SecurityLoader")
+print("✅ Loader loaded successfully")
+LoadingNotification.Update(1, 32, "Loader")
 
 -- Module list
 local ModuleList = {
@@ -328,7 +324,7 @@ local function LoadModuleWithRetry(moduleName, retryCount)
     retryCount = retryCount or 0
     
     local success, result = pcall(function()
-        return SecurityLoader.LoadModule(moduleName)
+        return Loader.LoadModule(moduleName)
     end)
     
     if success and result then
@@ -563,7 +559,7 @@ new("UICorner", {Parent = headerDragHandle, CornerRadius = UDim.new(1, 0)})
 -- Title with glow
 local titleLabel = new("TextLabel", {
     Parent = scriptHeader,
-    Text = "LynX",
+    Text = "ZoyY",
     Size = UDim2.new(0, 80, 1, 0),
     Position = UDim2.new(0, 15, 0, 0),
     BackgroundTransparency = 1,
@@ -579,7 +575,7 @@ local titleLabel = new("TextLabel", {
 -- Title glow effect
 local titleGlow = new("TextLabel", {
     Parent = scriptHeader,
-    Text = "LynX",
+    Text = "ZoyY",
     Size = titleLabel.Size,
     Position = titleLabel.Position,
     BackgroundTransparency = 1,
@@ -620,7 +616,7 @@ new("UICorner", {Parent = separator, CornerRadius = UDim.new(1, 0)})
 
 local subtitleLabel = new("TextLabel", {
     Parent = scriptHeader,
-    Text = "Free Not For Sale",
+    Text = "Premium",
     Size = UDim2.new(0, 150, 1, 0),
     Position = UDim2.new(0, 105, 0, 0),
     BackgroundTransparency = 1,
@@ -992,7 +988,7 @@ btnShop.MouseButton1Click:Connect(function() switchPage("Shop", "Shop Features")
 btnWebhook.MouseButton1Click:Connect(function() switchPage("Webhook", "Webhook Page") end)
 btnCameraView.MouseButton1Click:Connect(function() switchPage("CameraView", "Camera View Settings") end)
 btnSettings.MouseButton1Click:Connect(function() switchPage("Settings", "Settings") end)
-btnInfo.MouseButton1Click:Connect(function() switchPage("Info", "About Lynx") end)
+btnInfo.MouseButton1Click:Connect(function() switchPage("Info", "About Zoyy") end)
 
 -- ============================================
 -- REUSABLE UI COMPONENTS
@@ -1679,7 +1675,7 @@ end
 -- Load ConfigSystem
 local ConfigSystem
 local configSuccess, configError = pcall(function()
-    ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/akmiliadevi/Tugas_Kuliah/refs/heads/main/Project/Misc/SaveConfig.lua"))()
+    ConfigSystem = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zoxu4K/ZoyyHub/main/Project/Misc/SaveConfig.lua"))()
 end)
 
 if not configSuccess or not ConfigSystem then
@@ -2896,7 +2892,7 @@ end, "FPSDropdown")
 -- Hide Stats Category
 local catHideStats = makeCategory(settingsPage, "Hide Stats", "👤")
 local HideStats = GetModule("HideStats")
-local currentFakeName = GetConfigValue("Settings.HideStats.FakeName", "Guest")
+local currentFakeName = GetConfigValue("Settings.HideStats.FakeName", "ZoyyHub")
 local currentFakeLevel = GetConfigValue("Settings.HideStats.FakeLevel", "1")
 
 -- Fake Name Input
@@ -2944,7 +2940,7 @@ local fakeNameTextBox = new("TextBox", {
     Position = UDim2.new(0, 6, 0, 0),
     BackgroundTransparency = 1,
     Text = currentFakeName,
-    PlaceholderText = "Guest",
+    PlaceholderText = "ZoyyHub",
     Font = Enum.Font.Gotham,
     TextSize = 9,
     TextColor3 = colors.text,
@@ -3080,7 +3076,7 @@ ToggleReferences.HideStats = makeToggle(catHideStats, "⚡ Enable Hide Stats", f
     
     if on then
         pcall(function()
-            if currentFakeName ~= "" and currentFakeName ~= "Guest" then
+            if currentFakeName ~= "" and currentFakeName ~= "ZoyyHub" then
                 HideStats.SetFakeName(currentFakeName)
             end
             
@@ -3187,14 +3183,14 @@ task.spawn(function()
         if ConfigSystem and configStatusText and configStatusText.Parent then
             local hasConfigFile = false
             pcall(function()
-                hasConfigFile = isfile("LynxGUI_Configs/lynx_config.json")
+                hasConfigFile = isfile("ZoyyGUI_Configs/zoyy_config.json")
             end)
             
             local statusIcon = hasConfigFile and "✅" or "⚠️"
             local statusMsg = hasConfigFile and "Config file exists" or "No config saved yet"
             
             configStatusText.Text = string.format(
-                "📦 CONFIG STATUS\n%s %s\n\n💡 Settings auto-save on change!\n📁 Folder: LynxGUI_Configs\n📄 File: lynx_config.json",
+                "📦 CONFIG STATUS\n%s %s\n\n💡 Settings auto-save on change!\n📁 Folder: ZoyyGUI_Configs\n📄 File: zoyy_config.json",
                 statusIcon, statusMsg
             )
         end
@@ -3220,7 +3216,7 @@ local infoText = new("TextLabel", {
     Size = UDim2.new(1, -24, 0, 100),
     Position = UDim2.new(0, 12, 0, 12),
     BackgroundTransparency = 1,
-    Text = "# LynX v2.3 Improved\nFree Not For Sale\n━━━━━━━━━━━━━━━━━━━━━━\nCreated by Beee\nRefined Edition 2024",
+    Text = "# ZoyY v2.3 Improved\n━━━━━━━━━━━━━━━━━━━━━━\nCreated by Zoyy\nRefined Edition 2024",
     Font = Enum.Font.Gotham,
     TextSize = 10,
     TextColor3 = colors.text,
@@ -3235,7 +3231,7 @@ local linkButton = new("TextButton", {
     Size = UDim2.new(1, -24, 0, 25),
     Position = UDim2.new(0, 12, 0, 115),
     BackgroundTransparency = 1,
-    Text = "🔗 Discord: https://discord.gg/6Rpvm2gQ",
+    Text = "🔗 Discord: https://discord.gg/XXXXX",
     Font = Enum.Font.GothamBold,
     TextSize = 10,
     TextColor3 = Color3.fromRGB(88, 101, 242),
@@ -3244,10 +3240,10 @@ local linkButton = new("TextButton", {
 })
 
 linkButton.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.gg/6Rpvm2gQ")
+    setclipboard("https://discord.gg/XXXXX")
     linkButton.Text = "✅ Link copied to clipboard!"
     task.wait(2)
-    linkButton.Text = "🔗 Discord: https://discord.gg/6Rpvm2gQ"
+    linkButton.Text = "🔗 Discord: https://discord.gg/XXXXX"
 end)
 
 -- Module Status Display
@@ -3628,7 +3624,7 @@ local function ApplyLoadedConfig()
         
         -- HideStats
         if HideStats and GetConfigValue("Settings.HideStats.Enabled", false) then
-            local savedName = GetConfigValue("Settings.HideStats.FakeName", "Guest")
+            local savedName = GetConfigValue("Settings.HideStats.FakeName", "ZoyyHub")
             local savedLevel = GetConfigValue("Settings.HideStats.FakeLevel", "1")
             
             pcall(function()
@@ -3656,10 +3652,9 @@ end)
 -- FINAL SUCCESS MESSAGE
 -- ============================================
 print("\n━━━━━━━━━━━━━━━━━━━━━━")
-print("✨ Lynx GUI v2.3 IMPROVED")
-print("FREE NOT FOR SALE")
+print("✨ Zoyy GUI v2.3 IMPROVED")
 print("━━━━━━━━━━━━━━━━━━━━━━")
-print("💎 Created by Lynx Team")
+print("💎 Created by Zoyy")
 print("📦 Modules: " .. loadedModules .. "/" .. totalModules .. " loaded")
 
 local hideStatsOK = (HideStats ~= nil)
@@ -3699,7 +3694,7 @@ print("\n🎮 GUI ready to use!")
 print("━━━━━━━━━━━━━━━━━━━━━━\n")
 
 -- Send success notification
-SendNotification("✨ Lynx GUI v2.3", "Loaded successfully! " .. loadedModules .. "/" .. totalModules .. " modules ready.", 5)
+SendNotification("✨ Zoyy GUI v2.3", "Loaded successfully! " .. loadedModules .. "/" .. totalModules .. " modules ready.", 5)
 
 -- ============================================
 -- 🎉 SCRIPT COMPLETE - ALL 8 PARTS DONE!
@@ -3714,5 +3709,5 @@ SendNotification("✨ Lynx GUI v2.3", "Loaded successfully! " .. loadedModules .
 -- ✅ Part 7: Camera View, Settings & Info Pages
 -- ✅ Part 8: Interactions, Animations & Final Setup
 --
--- 🚀 LYNX GUI v2.3 IMPROVED - READY TO USE!
+-- 🚀 ZOYY GUI v2.3 IMPROVED - READY TO USE!
 -- ============================================
