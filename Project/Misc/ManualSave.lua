@@ -1,6 +1,6 @@
 -- ============================================
 -- MANUAL SAVE MODULE v2.3
--- Integrated Config System for LynX GUI
+-- Integrated Config System for ZoyY GUI
 -- ============================================
 
 local ManualSave = {}
@@ -10,7 +10,7 @@ local HttpService = game:GetService("HttpService")
 -- CONFIGURATION
 -- ============================================
 local CONFIG = {
-    FOLDER = "LynxGUI_v23",
+    FOLDER = "ZoyyGUI_v23",
     FILE = "config.json",
     AUTO_SAVE = false,
     AUTO_SAVE_INTERVAL = 30,
@@ -144,7 +144,7 @@ local DefaultConfig = {
         FPSLimit = 60,
         HideStats = {
             Enabled = false,
-            FakeName = "Guest",
+            FakeName = "ZoyyHub",
             FakeLevel = "1"
         }
     },
