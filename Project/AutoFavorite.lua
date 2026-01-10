@@ -1,6 +1,6 @@
 -- ============================================
--- AUTO FAVORITE MODULE - LYNX GUI COMPATIBLE
--- Optimized for integration with LynxGUI v2.3.1
+-- AUTO FAVORITE MODULE - ZOYY GUI COMPATIBLE
+-- Optimized for integration with ZoyyGUI v2.3.1
 -- FIXED: Instant loading, no delay on first toggle
 -- ============================================
 
