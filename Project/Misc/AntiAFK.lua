@@ -4,7 +4,7 @@ local Players = game:GetService("Players")
 local localPlayer = Players.LocalPlayer
 
 local AntiAFK = {
-    Enabled = false,
+    Enabled = true,
     Connection = nil
 }
 
