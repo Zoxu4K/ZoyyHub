@@ -1,6 +1,6 @@
 -- =====================================================
--- DISABLE 3D RENDERING MODULE (CLEAN VERSION)
--- For integration with Zoyy GUI v2.3
+-- DISABLE 3D RENDERING MODULE (BLACK SCREEN VERSION)
+-- Layar jadi hitam saat aktif
 -- =====================================================
 
 local DisableRendering = {}
@@ -16,7 +16,7 @@ local LocalPlayer = Players.LocalPlayer
 -- CONFIGURATION
 -- =====================================================
 DisableRendering.Settings = {
-    AutoPersist = true -- Keep active after respawn
+    AutoPersist = true
 }
 
 -- =====================================================
@@ -24,8 +24,47 @@ DisableRendering.Settings = {
 -- =====================================================
 local State = {
     RenderingDisabled = false,
-    RenderConnection = nil
+    RenderConnection = nil,
+    BlackScreen = nil  -- ✅ TAMBAH INI
 }
+
+-- =====================================================
+-- BLACK SCREEN OVERLAY
+-- =====================================================
+local function CreateBlackScreen()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "DisableRenderingBlackScreen"
+    screenGui.DisplayOrder = 999999999
+    screenGui.IgnoreGuiInset = true
+    screenGui.ResetOnSpawn = false
+    
+    local blackFrame = Instance.new("Frame")
+    blackFrame.Size = UDim2.new(1, 0, 1, 0)
+    blackFrame.Position = UDim2.new(0, 0, 0, 0)
+    blackFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- ✅ HITAM
+    blackFrame.BorderSizePixel = 0
+    blackFrame.Parent = screenGui
+    
+    screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    return screenGui
+end
+
+local function RemoveBlackScreen()
+    if State.BlackScreen then
+        State.BlackScreen:Destroy()
+        State.BlackScreen = nil
+    end
+    
+    -- Cleanup semua black screen yang mungkin tersisa
+    local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+    if playerGui then
+        for _, child in ipairs(playerGui:GetChildren()) do
+            if child.Name == "DisableRenderingBlackScreen" then
+                child:Destroy()
+            end
+        end
+    end
+end
 
 -- =====================================================
 -- PUBLIC API FUNCTIONS
@@ -38,6 +77,9 @@ function DisableRendering.Start()
     end
     
     local success, err = pcall(function()
+        -- ✅ CREATE BLACK SCREEN FIRST
+        State.BlackScreen = CreateBlackScreen()
+        
         -- Disable 3D rendering
         State.RenderConnection = RunService.RenderStepped:Connect(function()
             pcall(function()
@@ -50,10 +92,11 @@ function DisableRendering.Start()
     
     if not success then
         warn("[DisableRendering] Failed to start:", err)
+        RemoveBlackScreen()
         return false, "Failed to start"
     end
     
-    return true, "Rendering disabled"
+    return true, "Rendering disabled (Black Screen)"
 end
 
 -- Stop disable rendering
@@ -71,6 +114,9 @@ function DisableRendering.Stop()
         
         -- Re-enable rendering
         RunService:Set3dRenderingEnabled(true)
+        
+        -- ✅ REMOVE BLACK SCREEN
+        RemoveBlackScreen()
         
         State.RenderingDisabled = false
     end)
@@ -106,6 +152,10 @@ if DisableRendering.Settings.AutoPersist then
             task.wait(0.5)
             pcall(function()
                 RunService:Set3dRenderingEnabled(false)
+                -- Re-create black screen after respawn
+                if not State.BlackScreen or not State.BlackScreen.Parent then
+                    State.BlackScreen = CreateBlackScreen()
+                end
             end)
         end
     end)
@@ -121,6 +171,9 @@ function DisableRendering.Cleanup()
             RunService:Set3dRenderingEnabled(true)
         end)
     end
+    
+    -- Remove black screen
+    RemoveBlackScreen()
     
     -- Disconnect all connections
     if State.RenderConnection then
