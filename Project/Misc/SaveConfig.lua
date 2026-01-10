@@ -1,7 +1,3 @@
--- ConfigSystem.luaaaa
--- Auto Save/Load Configuration System for Lynx GUI
--- FREE NOT FOR SALE
-
 local HttpService = game:GetService("HttpService")
 
 local ConfigSystem = {}
@@ -10,8 +6,8 @@ ConfigSystem.Version = "1.0"
 -- ============================================
 -- CONFIG SETTINGS
 -- ============================================
-local CONFIG_FOLDER = "LynxGUI_Configs"
-local CONFIG_FILE = CONFIG_FOLDER .. "/lynx_config.json"
+local CONFIG_FOLDER = "ZoyyGUI_Configs"
+local CONFIG_FILE = CONFIG_FOLDER .. "/zoyy_config.json"
 
 -- ============================================
 -- DEFAULT CONFIG STRUCTURE
@@ -111,7 +107,7 @@ local DefaultConfig = {
         FPSLimit = 60,
         HideStats = {
             Enabled = false,
-            FakeName = "Guest",
+            FakeName = "ZoyyHub",
             FakeLevel = "1"
         }
     }
@@ -267,7 +263,7 @@ end
 -- PRINT CONFIG STATUS
 -- ============================================
 function ConfigSystem.PrintStatus()
-    print("=== LYNX GUI CONFIG STATUS ===")
+    print("=== ZOYY GUI CONFIG STATUS ===")
     print("📦 Version:", ConfigSystem.Version)
     print("📁 Folder:", CONFIG_FOLDER)
     print("📄 File:", CONFIG_FILE)
