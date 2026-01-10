@@ -8,9 +8,9 @@ local HideStatsModule = {}
 
 -- Settings
 local HideStatsEnabled = false
-local FakeName = "Bagi Sikrit bang"
+local FakeName = "ZOYY HUB"
 local FakeLevel = "1"
-local ScriptName = "-ZoyyHub-"
+local ScriptName = "dsc.gg/"
 
 -- Variable untuk menyimpan original text
 local OriginalTexts = {}
