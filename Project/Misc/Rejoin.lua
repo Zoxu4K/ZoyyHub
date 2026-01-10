@@ -1,6 +1,3 @@
--- Standalone Rejoin Script - GUI Compatible (BUTTON ONLY)
--- NO EXTERNAL DEPENDENCIES - SELF CONTAINED
-
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
