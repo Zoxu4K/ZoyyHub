@@ -1,7 +1,7 @@
 -- ⚡ FungsiKeaby/Misc/UnlockFPS.lua
 local UnlockFPS = {
-    Enabled = true,
-    CurrentCap = 240,
+    Enabled = false,
+    CurrentCap = 60,
 }
 
 -- daftar pilihan FPS yang bisa dipilih dari dropdown GUI
